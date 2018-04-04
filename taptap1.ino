@@ -90,9 +90,9 @@ void loop() {
               digitalWrite(10,100);
               delay(500);
               digitalWrite(10,LOW); // sets the digital pin 10 off
+              switchCharacteristic.setValue(0);
             }
           }
-          switchCharacteristic.setValue(0);
       }
     }
     
