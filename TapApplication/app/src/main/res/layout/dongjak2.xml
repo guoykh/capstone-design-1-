@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/sufflebtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="셔플" />
+
+
+        <Button
+            android:id="@+id/flapbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="플랩" />
+
+        <Button
+            android:id="@+id/cramprbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="크램프 롤" />
+
+        <Button
+            android:id="@+id/buffbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="버팔로" />
+
+        <Button
+            android:id="@+id/brusbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="브러쉬" />
+
+        <Button
+            android:id="@+id/stampbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:drawable/editbox_background"
+            android:gravity="center_vertical"
+            android:onClick="onClickDongjak"
+            android:text="스탬프" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="중급동작" />
+</RelativeLayout>

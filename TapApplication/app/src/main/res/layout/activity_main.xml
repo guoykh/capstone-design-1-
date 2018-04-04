@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.tapapplication.MainActivity">
+
+    <Button
+        android:id="@+id/basebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBase"
+        android:text="기본동작"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/dancebtn"
+        app:layout_constraintRight_toRightOf="@+id/wrongbtn"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/wrongbtn"
+        app:layout_constraintTop_toTopOf="@+id/dancebtn" />
+
+    <Button
+        android:id="@+id/dancebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickDance"
+        android:text="춤동작"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/favbtn"
+        app:layout_constraintRight_toRightOf="@+id/favbtn"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintLeft_toLeftOf="@+id/favbtn" />
+
+    <Button
+        android:id="@+id/wrongbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickWrong"
+        android:text="틀린동작"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/favbtn"
+        app:layout_constraintRight_toRightOf="@+id/checkbtn"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/checkbtn"
+        app:layout_constraintTop_toTopOf="@+id/favbtn" />
+
+    <Button
+        android:id="@+id/favbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickFav"
+        android:text="즐겨찾기"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintRight_toRightOf="@+id/button6"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintLeft_toLeftOf="@+id/button6" />
+
+    <Button
+        android:id="@+id/checkbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickCheck"
+        android:text="배터리확인"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="52dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button6"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button6" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="69dp"
+        android:onClick="onClickBluetooth"
+        android:text="블루투스"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+</android.support.constraint.ConstraintLayout>
