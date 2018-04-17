@@ -1,9 +1,13 @@
 package com.example.user.tapapplication;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.example.user.tapapplication.Bluetooth_contact.DeviceActivity;
+import com.example.user.tapapplication.dongjak1_play.Tap1Play;
 
 public class BaseTap extends AppCompatActivity{
     @Override

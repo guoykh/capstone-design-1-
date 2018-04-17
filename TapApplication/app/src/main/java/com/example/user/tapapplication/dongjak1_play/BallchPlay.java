@@ -17,7 +17,7 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 public class BallchPlay extends YouTubeBaseActivity {
     YouTubePlayerView youTubeView;
-    Button button;
+    Button button,practice;
     YouTubePlayer.OnInitializedListener listener;
     VideoView video;
 
@@ -33,6 +33,7 @@ public class BallchPlay extends YouTubeBaseActivity {
         video.setVideoURI(uri);
         video.setMediaController(new MediaController(this));
         video.requestFocus();
+
         //리스너 등록부분
         listener = new YouTubePlayer.OnInitializedListener(){
 

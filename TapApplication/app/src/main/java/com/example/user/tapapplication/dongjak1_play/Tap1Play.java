@@ -1,5 +1,7 @@
 package com.example.user.tapapplication.dongjak1_play;
 
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.user.tapapplication.R;
+import com.example.user.tapapplication.dongjak1_practice.Tap1Practice;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -17,10 +20,9 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 public class Tap1Play extends YouTubeBaseActivity {
     YouTubePlayerView youTubeView;
-    Button button;
+    Button button,practice;
     YouTubePlayer.OnInitializedListener listener;
     VideoView video;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,14 @@ public class Tap1Play extends YouTubeBaseActivity {
         video.setVideoURI(uri);
         video.setMediaController(new MediaController(this));
         video.requestFocus();
+        practice = findViewById(R.id.practice);
+        practice.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent i = new Intent(Tap1Play.this, Tap1Practice.class);
+                startActivity(i);
+            }
+        });
 
         //리스너 등록부분
         listener = new YouTubePlayer.OnInitializedListener(){
