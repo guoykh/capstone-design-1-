@@ -143,6 +143,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                 Log.d("run","연결 성공");
                 stopScan();
                 blechecked=true;
+                init();
                 Toast.makeText(Tap1Practice.this,"연결 성공",Toast.LENGTH_SHORT).show();
             }
             else if(Device1 != null && Device2 == null) {
@@ -199,11 +200,11 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
             if (a) {
                 Log.d("setNotifySensor", "Tap1 Success");
             }
-            BluetoothGattDescriptor desc = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+//            BluetoothGattDescriptor desc = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
+ //           desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
 
-            Log.i("BLE","Descriptor is "+desc);
-            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
+ //           Log.i("BLE","Descriptor is "+desc);
+//            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
         }
         if(("TapTap2").equals(device.getName())) {
             disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
@@ -254,14 +255,12 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
                 data2=i;
-                Log.d("Read","data1 was read : "+data2);
-                if(data2 == -2){
-                    TextView tv = findViewById(R.id.result_text);
-                    tv.setText("틀렸습니다.");
+                Log.d("Read","data2 was read : "+data2);
+                if(data2 == 10){
+                    Log.d("결과","틀림");
                 }
                 if(data2 == 2){
-                    TextView tv = findViewById(R.id.result_text);
-                    tv.setText("성공했습니다!");
+                    Log.d("결과","성공");
                 }
                /* else if( i>2 && i<=5){
                     data2=i;
