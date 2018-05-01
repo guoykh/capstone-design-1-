@@ -7,6 +7,18 @@ import android.view.View;
 
 import com.example.user.tapapplication.Bluetooth_contact.Ble_MainActivity;
 
+<<<<<<< HEAD
+public class MainActivity extends AppCompatActivity {
+    private String mAppData="";
+    public void setAppData(String data){
+        mAppData = data;
+    }
+
+    public String getAppData(){
+        return mAppData;
+    }
+=======
+>>>>>>> 717196b470593615c0285c1e5a47ee35d9ac015f
 
 public class MainActivity extends AppCompatActivity{
     @Override

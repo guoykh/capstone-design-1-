@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.user.tapapplication.dongjak1_play.BallchPlay;
 import com.example.user.tapapplication.dongjak1_play.BalldrPlay;
@@ -25,11 +26,42 @@ import com.example.user.tapapplication.dongjak1_play.Tap2Play;
                     } else if (v.getId() == R.id.llSendBtnLayout || v.getId() == R.id.ivSendBtn) {
                     참고해서 페이지 줄이자*/
 public class Dongjak1 extends AppCompatActivity {
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dongjak1);
+
+
+
+
     }
+
+    public void onClickStar(View v){
+        //MainActivity app = (MainActivity) getApplicationContext();
+        //app.setAppData("tap1");
+        //startActivity(new Intent(this, FavoriteTap.class));
+
+        Intent intent = new Intent(this, FavoriteTap.class);
+
+        intent.putExtra("USERNAME_KEY","tap1");
+        startActivity(intent);
+
+    }
+    public void onClickStar1(View v){
+        //MainActivity app = (MainActivity) getApplicationContext();
+        //app.setAppData("tap1");
+        //startActivity(new Intent(this, FavoriteTap.class));
+
+        Intent intent = new Intent(this, FavoriteTap.class);
+
+        intent.putExtra("USERNAME_KEY","tap2");
+        startActivity(intent);
+
+    }
+
     public void onClickDongjak(View view){
         if(view.getId() == R.id.tap1btn){
             Intent i = new Intent(this, Tap1Play.class);
