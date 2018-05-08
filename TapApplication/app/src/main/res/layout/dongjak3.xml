@@ -32,4 +32,14 @@
         app:layout_constraintVertical_bias="0.191"
         tools:ignore="MissingConstraints" />
 
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        android:onClick="onClickStar1"
+        android:background="@drawable/starclick"
+        tools:layout_editor_absoluteX="279dp"
+        tools:layout_editor_absoluteY="100dp" />
+
 </android.support.constraint.ConstraintLayout>

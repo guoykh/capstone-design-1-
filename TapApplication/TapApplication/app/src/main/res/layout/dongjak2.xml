@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.tapapplication.Dongjak2">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/sufflebtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="셔플"
+        android:textSize="20sp"
+        android:onClick="onClickDongjak"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.199"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/flapbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="플랩"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/cramprbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="크램프 롤"
+        android:onClick="oonClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.443"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/buffbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="버팔로"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/brusbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="브러쉬"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.69"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/stampbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="스탬프"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.823"
+        tools:ignore="MissingConstraints" />
+
+</android.support.constraint.ConstraintLayout>

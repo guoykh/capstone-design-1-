@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.tapapplication.Dongjak1">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/tap1btn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:onClick="onClickDongjak"
+        android:background="@android:drawable/editbox_background"
+        android:text="탭1"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/tap2btn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="탭2"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.236"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/hopsubtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="홉 셔플"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/heeldrbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="힐 드롭"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/dikbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="딕"
+        android:textSize="20sp"
+        android:onClick="onClickDongjak"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.596"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/ballchbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="볼 체인지"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.706"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/balldrbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="볼 드롭"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.833"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/stepbtn"
+        android:layout_width="248dp"
+        android:layout_height="46dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="스텝"
+        android:onClick="onClickDongjak"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.952"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/tap1star"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/starclick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112"
+        tools:ignore="MissingConstraints" />
+</android.support.constraint.ConstraintLayout>
