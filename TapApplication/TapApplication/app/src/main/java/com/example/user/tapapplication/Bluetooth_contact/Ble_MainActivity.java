@@ -3,7 +3,6 @@ package com.example.user.tapapplication.Bluetooth_contact;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextClock;
@@ -27,7 +25,7 @@ import com.example.user.tapapplication.R;
 
 public class Ble_MainActivity extends Activity implements BluetoothAdapter.LeScanCallback {
     private BluetoothAdapter Adapter;
-    private BluetoothDevice Device1=null, Device2=null;
+    private BluetoothDevice Device1, Device2;
     private boolean IsScanning;
     Button tap1_btn, tap2_btn, check;
     static final int PERMISSION_REQUEST_CODE=1;
@@ -105,18 +103,17 @@ public class Ble_MainActivity extends Activity implements BluetoothAdapter.LeSca
     public void ContactOnClick(View view){
         TextView tv;
         if(view.getId()==R.id.tap1_contact_btn){
-           // startScan();
+            startScan();
             tv=(TextView)findViewById(R.id.tap1_tv);
             if(Device1 != null) {
                 tv.setText("TapTap1 연결됨");
             }
             else {
                 tv.setText("TapTap1 연결 오류");
-                Log.d("", "taptap1 connectiong error");
             }
         }
         if(view.getId()==R.id.tap2_contact_btn){
-          //  startScan();
+            startScan();
             tv=(TextView)findViewById(R.id.tap2_tv);
             if(Device2 != null){
                 tv.setText("TapTap2 연결됨");
@@ -133,12 +130,12 @@ public class Ble_MainActivity extends Activity implements BluetoothAdapter.LeSca
         setContentView(R.layout.bluetooth_check);
         Adapter = BluetoothAdapter.getDefaultAdapter();
 
-        startScan();
         //블루투스 활성화인지 체크
         if(!Adapter.isEnabled()){
          Intent btintent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
          startActivityForResult(btintent,REQUEST_ENABLE_BT);
         }
+
         check = (Button)findViewById(R.id.check_contact);
         check.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -165,8 +162,7 @@ public class Ble_MainActivity extends Activity implements BluetoothAdapter.LeSca
         });
 
         if (!hasPermissions(PERMISSIONS)) { //퍼미션 허가를 했었는지 여부를 확인
-            requestNecessaryPermissions(PERMISSIONS);//퍼미션 허가안되어
-            // 있다면 사용자에게 요청
+            requestNecessaryPermissions(PERMISSIONS);//퍼미션 허가안되어 있다면 사용자에게 요청
         } else {
             //이미 사용자에게 퍼미션 허가를 받음.
         }
@@ -177,18 +173,19 @@ public class Ble_MainActivity extends Activity implements BluetoothAdapter.LeSca
     @Override
     public void onLeScan(final BluetoothDevice device,final int rssi,
                          final byte[] scanRecord) {
-        Log.d("onLeScan","start");
-        if ("TapTap1".equals(device.getName())) {
-            Device1 = device;
+
+        if(device.getName().equals("TapTap1")){
+            Device1=device;
         }
-         if ("TapTap2".equals(device.getName())) {
-            Device2 = device;
+        if(device.getName().equals("TapTap2")){
+            Device2=device;
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         stopScan();
     }
 

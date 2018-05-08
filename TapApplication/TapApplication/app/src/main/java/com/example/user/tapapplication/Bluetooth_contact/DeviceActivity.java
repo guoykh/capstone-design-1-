@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
@@ -14,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,55 +27,61 @@ import java.util.UUID;
  * Created by user on 2018-03-31.
  */
 
-public class DeviceActivity extends Activity{
+public class DeviceActivity extends Activity {
     private static final String TAG = "BLEDevice";
     public static final String BLUETOOTH_DEVICE_1="DEVICE_1";
     public static final String BLUETOOTH_DEVICE_2="DEVICE_2";
-    public int data1=-1, data2=-1;
+    public int data1=0, data2=0;
     private BluetoothAdapter Adapter1,Adapter2;
     private BluetoothDevice Device1,Device2;
     private BluetoothGatt ConnGatt1,ConnGatt2;
-    private BluetoothGattService disService1, disService2;
-    private BluetoothGattCharacteristic characteristic1, characteristic2;
     private int Status1,Status2;
-    private boolean running = true;
+    Button Refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.check_send_data);
 
-        init();
+        Refresh = (Button)findViewById(R.id.refresh_btn);
+        Refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BluetoothGattService disService1 = ConnGatt1.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
+                BluetoothGattService disService2 = ConnGatt2.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
+                if (disService1 == null || disService2 == null) {
+                    Log.d("", "Dis service not found!");
+                    return;
+                }
+                BluetoothGattCharacteristic characteristic1 = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
+                BluetoothGattCharacteristic characteristic2 = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
+                if (characteristic1 == null || characteristic2 == null) {
+                    Log.d("", " charateristic not found!");
+                    return;
+                }
+                boolean result1 = ConnGatt1.readCharacteristic(characteristic1);
+                boolean result2 = ConnGatt2.readCharacteristic(characteristic2);
+                if (result1 == false || result2 == false) {
+                    Log.d("", "reading is failed!");
+                }
+                if(data1==2){
+                    characteristic1.setValue(3,BluetoothGattCharacteristic.FORMAT_UINT8,0);//new byte[] { (byte) 3 });
+                    ConnGatt1.writeCharacteristic(characteristic1);
+                    Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                }
+                if(data2==5){
+                    characteristic2.setValue(new byte[] { (byte) 3 });
+                    ConnGatt2.writeCharacteristic(characteristic2);
+                    Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                }
+                TextView tv = (TextView)findViewById(R.id.tap1_state);
+                tv.setText("value="+data1);
+                tv = (TextView)findViewById(R.id.tap2_state);
+                tv.setText("value="+data2);
 
-    }
 
-    private void setNotifySensor(BluetoothGatt gatt){
-        BluetoothDevice device = gatt.getDevice();
-        if(("TapTap1").equals(device.getName())) {
-            disService1 = gatt.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
-            characteristic1 = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
-            boolean a = gatt.setCharacteristicNotification(characteristic1, true);
-            if (a) {
-                Log.d("setNotifySensor", "Tap1 Success");
             }
-            BluetoothGattDescriptor desc = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-
-            Log.i("BLE","Descriptor is "+desc);
-            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
-        }
-        if(("TapTap2").equals(device.getName())) {
-            disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
-            characteristic2 = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
-            boolean a = gatt.setCharacteristicNotification(characteristic2, true);
-            if(a){
-                Log.d("setNotifySensor","Tap2 Success");
-            }
-            BluetoothGattDescriptor desc = characteristic2.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            Log.i("BLE","Descriptor is "+desc);
-            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
-        }
+        });
 
     }
 
@@ -86,7 +90,6 @@ public class DeviceActivity extends Activity{
         public void onConnectionStateChange(BluetoothGatt gatt, int status,
                                             int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.d("onConnStateChanged","called");
                 Status1 = newState;
                 ConnGatt1.discoverServices();
                 Status2 = newState;
@@ -106,84 +109,54 @@ public class DeviceActivity extends Activity{
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
 
             super.onServicesDiscovered(gatt, status);
-            if(status==BluetoothGatt.GATT_SUCCESS){
-                Log.d("called","onServicesDiscovered called");
-                setNotifySensor(gatt);
-            }
 
         };
 
         @Override // 아두이노 수신부
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic, int status) {
-            Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
 
                 if(i>=0 && i<=2){
                     data1=i;
-                    Log.d("Read","data1 was read : "+data1);
-                    if(data1 == 2){
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
-                        boolean X = gatt.writeCharacteristic(characteristic);
-                        if (X) {
-                            Log.d("Send","data1 보내기 성공");
-                        }
-                        else{
-                            Log.d("", "sending is failed : taptap1");
-                        }
-                    }
                 }
                 else if( i>2 && i<=5){
                     data2=i;
-                    Log.d("Read","data2 was read : "+data2);
-                    if(data2 == 5){
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
-                        boolean X = gatt.writeCharacteristic(characteristic);
-                        if (X) {
-                            Log.d("Send","data2 보내기 성공");
-                        }
-                        else{
-                            Log.d("", "sending is failed : taptap2");
-                        }
-                    }
                 }
             }
         }
 
-        @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt,
-                                            BluetoothGattCharacteristic characteristic){
-
-            Log.d("onCharacteristicChanged", "onCharacteristicChanged function is called");
-
-            if("TapTap1".equals(gatt.getDevice().getName())){
-                boolean newresult = ConnGatt1.readCharacteristic(characteristic);
-
-                if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap1 was read");
-                    Log.d("onCharacteristicChanged","data1: "+data1+", data2: "+data2);
-                }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+       /* @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt,
+                                          BluetoothGattCharacteristic characteristic, int status) {
+            BluetoothGattService disService1 = gatt.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
+            BluetoothGattService disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
+            if (disService1 == null || disService2 == null) {
+                Log.d("", "Dis service not found!");
+                return;
             }
-            if("TapTap2".equals(gatt.getDevice().getName())){
-                boolean newresult = ConnGatt2.readCharacteristic(characteristic);
-
-                if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap2 was read");
-                    Log.d("onCharacteristicChanged","data1: "+data1+", data2: "+data2);
-                }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+            characteristic = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
+            if (characteristic == null) {
+                Log.d("", " charateristic not found!");
+                return;
+            }
+            if(data1==2) {
+                characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
+                gatt.writeCharacteristic(characteristic);
             }
 
-        }
+            characteristic = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
+            if (characteristic == null) {
+                Log.d("", " charateristic not found!");
+                return;
+            }
+            if(data1==5) {
+                characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
+                gatt.writeCharacteristic(characteristic);
+            }
 
-
-
+        }*/
     };
 
     private BluetoothDevice getBTDeviceExtra1(){
@@ -195,9 +168,6 @@ public class DeviceActivity extends Activity{
         Bundle extras = intent.getExtras();
         if(extras == null){
             return null;
-        }
-        else {
-            Log.d("getExtras1","Success");
         }
         return extras.getParcelable(BLUETOOTH_DEVICE_1);
     }
@@ -212,49 +182,21 @@ public class DeviceActivity extends Activity{
         if(extras == null){
             return null;
         }
-        else {
-            Log.d("getExtras2","Success");
-        }
         return extras.getParcelable(BLUETOOTH_DEVICE_2);
     }
 
 
 
     @Override
-    protected void onResume() { // setContentView(R.layout.check_send_data); 를 넣어서 호출을 해보자
+    protected void onResume() {
         super.onResume();
-        Log.d("","onResume start");
-        init();
-    }
 
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.d("onStop","start");
-        running = false;
-        if (ConnGatt1 != null) {
-            if ((Status1 != BluetoothProfile.STATE_DISCONNECTING)
-                    && (Status1 != BluetoothProfile.STATE_DISCONNECTED)) {
-                ConnGatt1.disconnect();
-            }
-            ConnGatt1.close();
-            ConnGatt1 = null;
-        }
-        if (ConnGatt2 != null) {
-            if ((Status2 != BluetoothProfile.STATE_DISCONNECTING)
-                    && (Status2 != BluetoothProfile.STATE_DISCONNECTED)) {
-                ConnGatt2.disconnect();
-            }
-            ConnGatt2.close();
-            ConnGatt2 = null;
-        }
+        init();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("onDestroy()","Destroy");
-        running = false;
         if (ConnGatt1 != null) {
             if ((Status1 != BluetoothProfile.STATE_DISCONNECTING)
                     && (Status1 != BluetoothProfile.STATE_DISCONNECTED)) {
@@ -275,7 +217,6 @@ public class DeviceActivity extends Activity{
 
 
     private void init() {
-        Log.d("init","start init()");
         // BLE check
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this,"ble_not_supported", Toast.LENGTH_SHORT)
@@ -303,7 +244,6 @@ public class DeviceActivity extends Activity{
             Device2 = getBTDeviceExtra2();
             if (Device1 == null || Device2 == null) {
                 finish();
-                Log.d("Device","getExtra failed");
                 return;
             }
         }
@@ -316,11 +256,9 @@ public class DeviceActivity extends Activity{
             ConnGatt2 = Device2.connectGatt(this, false, mGattcallback);
             Status1 = BluetoothProfile.STATE_CONNECTING;
             Status2 = BluetoothProfile.STATE_CONNECTING;
-            Log.d("Connect","Connecting");
         } else {
             if (ConnGatt1 != null && ConnGatt2 != null) {
                 // re-connect and re-discover Services
-                Log.d("reconnect","called");
                 ConnGatt1.connect();
                 ConnGatt2.connect();
                 ConnGatt1.discoverServices();
@@ -332,4 +270,5 @@ public class DeviceActivity extends Activity{
             }
         }
     }
+
 }
