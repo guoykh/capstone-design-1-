@@ -2,24 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.tapapplication"
     android:versionCode="1"
-    android:versionName="1.0.0" >
+    android:versionName="1.0.0">
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <application
 
+    <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -28,33 +29,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Bluetooth_contact.Ble_MainActivity"></activity>
-        <activity android:name=".Bluetooth_contact.DeviceActivity"/>
-        <activity android:name=".BaseTap"></activity>
-        <activity android:name=".DanceTap"></activity>
-        <activity android:name=".CheckBattery"></activity>
-        <activity android:name=".WrongTap"></activity>
-        <activity android:name=".FavoriteTap"></activity>
-        <activity android:name=".Dongjak1"></activity>
-        <activity android:name=".Dongjak2"></activity>
-        <activity android:name=".Dongjak3"></activity>
-        <activity android:name=".dongjak1_play.Tap1Play"></activity>
-        <activity android:name=".dongjak1_play.Tap2Play"></activity>
-        <activity android:name=".dongjak1_play.BalldrPlay"></activity>
-        <activity android:name=".dongjak1_play.BallchPlay"></activity>
-        <activity android:name=".dongjak1_play.HeeldrPlay"></activity>
-        <activity android:name=".dongjak1_play.DikPlay"></activity>
-        <activity android:name=".dongjak1_play.HopsuPlay"></activity>
-        <activity android:name=".dongjak1_play.StepPlay"></activity>
-        <activity android:name=".dongjak2_play.BrushPlay"></activity>
-        <activity android:name=".dongjak2_play.BuffPlay"></activity>
-        <activity android:name=".dongjak2_play.CrampPlay"></activity>
-        <activity android:name=".dongjak2_play.FlapPlay"></activity>
-        <activity android:name=".dongjak2_play.StampPlay"></activity>
-        <activity android:name=".dongjak2_play.SufflePlay"></activity>
-        <activity android:name=".dongjak3_play.DragPlay"></activity>
-
+        <activity android:name=".Bluetooth_contact.Ble_MainActivity" />
+        <activity android:name=".Bluetooth_contact.DeviceActivity" />
+        <activity android:name=".BaseTap" />
+        <activity android:name=".DanceTap" />
+        <activity android:name=".CheckBattery" />
+        <activity android:name=".WrongTap" />
+        <activity android:name=".FavoriteTap" />
+        <activity android:name=".Dongjak1" />
+        <activity android:name=".Dongjak2" />
+        <activity android:name=".Dongjak3" />
+        <activity android:name=".dongjak_play.Tap1Play" />
+        <activity android:name=".dongjak_play.Tap2Play" />
+        <activity android:name=".dongjak_play.BalldrPlay" />
+        <activity android:name=".dongjak_play.BallchPlay" />
+        <activity android:name=".dongjak_play.HeeldrPlay" />
+        <activity android:name=".dongjak_play.DigPlay" />
+        <activity android:name=".dongjak_play.HopshuPlay" />
+        <activity android:name=".dongjak_play.StepPlay" />
+        <activity android:name=".dongjak_play.BrushPlay" />
+        <activity android:name=".dongjak_play.BuffPlay" />
+        <activity android:name=".dongjak_play.CrampPlay" />
+        <activity android:name=".dongjak_play.FlapPlay" />
+        <activity android:name=".dongjak_play.StampPlay" />
+        <activity android:name=".dongjak_play.ShufflePlay" />
+        <activity android:name=".dongjak_play.DragPlay" />
+        <activity android:name=".dongjak1_practice.Tap1Practice"/>
 
     </application>
 

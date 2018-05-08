@@ -19,15 +19,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
 
-    <view
-        android:id="@+id/youtubeView"
-        class="com.google.android.youtube.player.YouTubePlayerView"
-        id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+
 
     <Button
         android:id="@+id/startbtn"
@@ -69,7 +61,30 @@
         android:layout_height="200dp"
 
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/youtubeView"
-        android:layout_marginTop="15dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="95dp" />
+
+    <TextView
+        android:id="@+id/tap_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="40dp" />
+<<<<<<< HEAD
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="66dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/tap_name"
+        android:layout_alignEnd="@+id/practice"
+        android:onClick="onClickStar1"
+        android:text="ToggleButton" />
+=======
+>>>>>>> c8465e3fe1f3215272b28df3801f627f8eabbc27
 
 </RelativeLayout>

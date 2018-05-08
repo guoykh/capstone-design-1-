@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.example.user.tapapplication.dongjak1_play.BallchPlay;
-import com.example.user.tapapplication.dongjak1_play.BalldrPlay;
-import com.example.user.tapapplication.dongjak1_play.DikPlay;
-import com.example.user.tapapplication.dongjak1_play.HeeldrPlay;
-import com.example.user.tapapplication.dongjak1_play.HopsuPlay;
-import com.example.user.tapapplication.dongjak1_play.StepPlay;
-import com.example.user.tapapplication.dongjak1_play.Tap1Play;
-import com.example.user.tapapplication.dongjak1_play.Tap2Play;
+import com.example.user.tapapplication.dongjak_play.BallchPlay;
+import com.example.user.tapapplication.dongjak_play.BalldrPlay;
+import com.example.user.tapapplication.dongjak_play.DigPlay;
+import com.example.user.tapapplication.dongjak_play.HeeldrPlay;
+import com.example.user.tapapplication.dongjak_play.HopshuPlay;
+import com.example.user.tapapplication.dongjak_play.StepPlay;
+import com.example.user.tapapplication.dongjak_play.Tap1Play;
+import com.example.user.tapapplication.dongjak_play.Tap2Play;
 
 /**
  * Created by user on 2018-01-14.
@@ -39,7 +39,7 @@ public class Dongjak1 extends AppCompatActivity {
             startActivity(i);
         }
         if(view.getId() == R.id.hopsubtn){
-            Intent i = new Intent(this, HopsuPlay.class);
+            Intent i = new Intent(this, HopshuPlay.class);
             startActivity(i);
         }
         if(view.getId() == R.id.heeldrbtn){
@@ -47,7 +47,7 @@ public class Dongjak1 extends AppCompatActivity {
             startActivity(i);
         }
         if(view.getId() == R.id.dikbtn){
-            Intent i = new Intent(this, DikPlay.class);
+            Intent i = new Intent(this, DigPlay.class);
             startActivity(i);
         }
         if(view.getId() == R.id.ballchbtn){
