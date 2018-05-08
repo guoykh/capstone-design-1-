@@ -39,21 +39,21 @@
         <activity android:name=".Dongjak1" />
         <activity android:name=".Dongjak2" />
         <activity android:name=".Dongjak3" />
-        <activity android:name=".dongjak1_play.Tap1Play" />
-        <activity android:name=".dongjak1_play.Tap2Play" />
-        <activity android:name=".dongjak1_play.BalldrPlay" />
-        <activity android:name=".dongjak1_play.BallchPlay" />
-        <activity android:name=".dongjak1_play.HeeldrPlay" />
-        <activity android:name=".dongjak1_play.DikPlay" />
-        <activity android:name=".dongjak1_play.HopsuPlay" />
-        <activity android:name=".dongjak1_play.StepPlay" />
-        <activity android:name=".dongjak2_play.BrushPlay" />
-        <activity android:name=".dongjak2_play.BuffPlay" />
-        <activity android:name=".dongjak2_play.CrampPlay" />
-        <activity android:name=".dongjak2_play.FlapPlay" />
-        <activity android:name=".dongjak2_play.StampPlay" />
-        <activity android:name=".dongjak2_play.SufflePlay" />
-        <activity android:name=".dongjak3_play.DragPlay" />
+        <activity android:name=".dongjak_play.Tap1Play" />
+        <activity android:name=".dongjak_play.Tap2Play" />
+        <activity android:name=".dongjak_play.BalldrPlay" />
+        <activity android:name=".dongjak_play.BallchPlay" />
+        <activity android:name=".dongjak_play.HeeldrPlay" />
+        <activity android:name=".dongjak_play.DigPlay" />
+        <activity android:name=".dongjak_play.HopshuPlay" />
+        <activity android:name=".dongjak_play.StepPlay" />
+        <activity android:name=".dongjak_play.BrushPlay" />
+        <activity android:name=".dongjak_play.BuffPlay" />
+        <activity android:name=".dongjak_play.CrampPlay" />
+        <activity android:name=".dongjak_play.FlapPlay" />
+        <activity android:name=".dongjak_play.StampPlay" />
+        <activity android:name=".dongjak_play.ShufflePlay" />
+        <activity android:name=".dongjak_play.DragPlay" />
         <activity android:name=".dongjak1_practice.Tap1Practice"/>
 
     </application>

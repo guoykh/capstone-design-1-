@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +25,9 @@ import android.widget.Toast;
 
 import com.example.user.tapapplication.R;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Delayed;
 
 public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.LeScanCallback{
 
@@ -35,15 +38,22 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
     public Handler handler;
     public boolean blechecked = false;
     private static final String TAG = "BLEDevice";
-    private BluetoothAdapter Adapter, Adapter1,Adapter2;
+    private BluetoothAdapter Adapter;
     private BluetoothDevice Device1=null, Device2=null;
     private BluetoothGatt ConnGatt1,ConnGatt2;
     private BluetoothGattService disService1, disService2;
     private BluetoothGattCharacteristic characteristic1, characteristic2;
+    public BluetoothGattDescriptor descriptor1, descriptor2;
     private int Status1,Status2;
     private boolean running = true;
     public int data1=-1, data2=-1;
+    public static final String De_UUID= "00002902-0001-1000-8000-00805f9b34fb";
+    public static final String Device1_Serv_U= "7c3f5818-3255-4307-b138-158e09ec8130";
+    public static final String Device1_Char_U= "f71d47a6-fb4e-4c87-9be9-1b2bea79a2db";
+    public static final String Device2_Serv_U= "d6e6a169-1a81-4ff4-a2b6-66534e32bebe";
+    public static final String Device2_Char_U= "11591b7f-bce5-4e28-ac31-1e54c5c077b1";
     Button start;
+    private UUID myUUID1, myUUID2;
 
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
@@ -95,6 +105,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_practice);
+
         handler = new Handler();
         Adapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 활성화인지 체크
@@ -102,7 +113,6 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
             Intent btintent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(btintent,REQUEST_ENABLE_BT);
         }
-
         handler.post(check); // 기기 연결 체크
 
         start = findViewById(R.id.practice_start);
@@ -190,34 +200,33 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
         IsScanning = false;
     }
 
-
     private void setNotifySensor(BluetoothGatt gatt){
         BluetoothDevice device = gatt.getDevice();
-        if(("TapTap1").equals(device.getName())) {
+            if(("TapTap1").equals(device.getName())) {
             disService1 = gatt.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
             characteristic1 = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
             boolean a = gatt.setCharacteristicNotification(characteristic1, true);
             if (a) {
                 Log.d("setNotifySensor", "Tap1 Success");
             }
-//            BluetoothGattDescriptor desc = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
- //           desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-
- //           Log.i("BLE","Descriptor is "+desc);
-//            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
-        }
-        if(("TapTap2").equals(device.getName())) {
+            descriptor1 = characteristic1.getDescriptor(UUID.fromString(De_UUID));
+            Log.i("Descriptor","Descriptor1 is "+descriptor1);
+            descriptor1.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            Log.i("Descriptor","Descriptor1 write: "+gatt.writeDescriptor(descriptor1));
+            SystemClock.sleep(500);
+    }
+    /*    if(("TapTap2").equals(device.getName())) {
             disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
             characteristic2 = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
             boolean a = gatt.setCharacteristicNotification(characteristic2, true);
             if(a){
                 Log.d("setNotifySensor","Tap2 Success");
             }
-            BluetoothGattDescriptor desc = characteristic2.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-            desc.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            Log.i("BLE","Descriptor is "+desc);
-            Log.i("BLE","Descriptor write: "+gatt.writeDescriptor(desc));
-        }
+            BluetoothGattDescriptor descriptor2 = characteristic2.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
+            Log.i("Descriptor","Descriptor2 is "+descriptor2);
+            descriptor2.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            Log.i("Descriptor","Descriptor2 write: "+gatt.writeDescriptor(descriptor2));
+        }*/
 
     }
 
@@ -241,10 +250,56 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
 
             super.onServicesDiscovered(gatt, status);
-            if(status==BluetoothGatt.GATT_SUCCESS){
+    /*        if(status==BluetoothGatt.GATT_SUCCESS){
                 Log.d("called","onServicesDiscovered called");
                 setNotifySensor(gatt);
+            }*/
+            Log.d("onServicesDiscovered","start");
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                List<BluetoothGattService> services = gatt.getServices();
+                myUUID1 = UUID.fromString(Device1_Serv_U);
+                myUUID2 = UUID.fromString(Device2_Serv_U);
+                for(BluetoothGattService service: services) {
+                    if(service.getUuid().equals(myUUID1)) {
+                        Log.d("tap1","service equal");
+                        myUUID1 = UUID.fromString(Device1_Char_U);
+                        characteristic1 = service.getCharacteristic(myUUID1);
+
+                        // Set notification properties:
+                        gatt.setCharacteristicNotification(characteristic1, true);
+
+                        descriptor1 = characteristic1.getDescriptor(UUID.fromString(De_UUID));
+                        Log.i("Descriptor","Descriptor1 is "+descriptor1);
+                        descriptor1.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                        Log.i("Descriptor","Descriptor1 write: "+gatt.writeDescriptor(descriptor1));
+
+                        break;
+                    }
+                    if(service.getUuid().equals(myUUID2)) {
+                        Log.d("tap2","service equal");
+                        myUUID2 = UUID.fromString(Device2_Char_U);
+                        characteristic2 = service.getCharacteristic(myUUID2);
+
+                        // Set notification properties:
+                        gatt.setCharacteristicNotification(characteristic2, true);
+
+                        descriptor2 = characteristic2.getDescriptor(UUID.fromString(De_UUID));
+                        Log.i("Descriptor","Descriptor2 is "+descriptor1);
+                        descriptor2.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                        Log.i("Descriptor","Descriptor2 write: "+gatt.writeDescriptor(descriptor2));
+
+                        break;
+                    }
+                }
+
+
             }
+            else {
+
+                Log.d("onServicesDiscovered", "Failed to services discovered, status " +  status);
+
+            }
+
 
         };
 
@@ -254,9 +309,15 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                data2=i;
-                Log.d("Read","data2 was read : "+data2);
-                if(data2 == 10){
+                if(i>0 && i<3){
+                    data1 = i;
+                    Log.d("Read","data1 was read : "+data1);
+                }
+                if(i>3 && i<6){
+                    data2 = i;
+                    Log.d("Read","data2 was read : "+data2);
+                }
+                /* if(data2 == 10){
                     Log.d("결과","틀림");
                 }
                 if(data2 == 2){
@@ -285,7 +346,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
 
             Log.d("onCharacteristicChanged", "onCharacteristicChanged function is called");
 
-            /*if("TapTap1".equals(gatt.getDevice().getName())){
+            if("TapTap1".equals(gatt.getDevice().getName())){
                 boolean newresult = ConnGatt1.readCharacteristic(characteristic);
 
                 if(newresult){
@@ -295,7 +356,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                 else{
                     Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
                 }
-            }*/
+            }
             if("TapTap2".equals(gatt.getDevice().getName())){
                 boolean newresult = ConnGatt2.readCharacteristic(characteristic);
 

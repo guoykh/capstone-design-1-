@@ -126,4 +126,13 @@
         tools:layout_editor_absoluteX="167dp"
         tools:layout_editor_absoluteY="548dp" />
 
+    <TextView
+        android:id="@+id/feat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="촬영 협조 : 아트빌리지 탭댄스 스튜디오 건대점"
+        android:textSize="23px"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="551dp" />
+
 </android.support.constraint.ConstraintLayout>

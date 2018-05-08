@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.example.user.tapapplication.dongjak3_play.DragPlay;
+import com.example.user.tapapplication.dongjak_play.DragPlay;
 
 /**
  * Created by user on 2018-01-14.
