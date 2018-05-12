@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/play"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+
+
+
+    <Button
+        android:id="@+id/startbtn"
+        android:layout_width="120dp"
+        android:layout_height="95dp"
+        android:layout_alignParentBottom="true"
+
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="23dp"
+        android:layout_marginStart="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.942"
+        android:onClick="onClickStart" />
+
+    <Button
+        android:id="@+id/practice"
+        android:layout_width="116dp"
+        android:layout_height="91dp"
+        android:layout_alignTop="@+id/startbtn"
+
+        android:layout_marginStart="50dp"
+        android:layout_toEndOf="@+id/startbtn"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.934" />
+
+    <VideoView
+        android:id="@+id/footprint"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="95dp" />
+
+    <TextView
+        android:id="@+id/tap_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="40dp" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="66dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/tap_name"
+        android:layout_alignEnd="@+id/practice"
+        android:onClick="onClickStar1"
+        android:text="ToggleButton"
+        />
+
+</RelativeLayout>

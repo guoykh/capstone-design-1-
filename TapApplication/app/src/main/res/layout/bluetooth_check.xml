@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/tap1_contact_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="19dp"
+        android:onClick="ContactOnClick"
+        android:text="Tap1 연결" />
+
+    <Button
+        android:id="@+id/tap2_contact_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tap1_contact_btn"
+        android:layout_below="@+id/tap1_contact_btn"
+        android:layout_marginTop="29dp"
+        android:onClick="ContactOnClick"
+        android:text="Tap2 연결" />
+
+    <TextView
+        android:id="@+id/tap1_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tap1_contact_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="tap1" />
+
+    <TextView
+        android:id="@+id/tap2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tap1_tv"
+        android:layout_alignTop="@+id/tap2_contact_btn"
+        android:layout_marginTop="12dp"
+        android:text="tap2" />
+
+    <Button
+        android:id="@+id/check_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tap2_contact_btn"
+        android:layout_below="@+id/tap2_contact_btn"
+        android:layout_marginTop="20dp"
+        android:text="Go" />
+
+    <TextView
+        android:id="@+id/state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/check_contact"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
+</RelativeLayout>
