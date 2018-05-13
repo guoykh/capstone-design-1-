@@ -29,7 +29,6 @@ import android.widget.VideoView;
 import com.example.user.tapapplication.R;
 
 import java.util.UUID;
-<<<<<<< HEAD
 import android.widget.ListAdapter;
 import android.widget.ToggleButton;
 import android.widget.ListView;
@@ -56,14 +55,6 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
-=======
-
-
-public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallback {
-    Button button,practice;
-    VideoView video;
-
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private boolean IsScanning;
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
@@ -159,7 +150,6 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                 handler.post(check); // 기기 연결 체크
             }
         });
-<<<<<<< HEAD
         personList = new ArrayList<HashMap<String, String>>();
 
         showList();
@@ -170,9 +160,6 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
         }
-=======
-
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -185,7 +172,6 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.count_text);
-<<<<<<< HEAD
                 textView.setText(""+count);
             }
         });
@@ -264,12 +250,6 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
         }
     }
     // http://webnautes.tistory.com/830 참고사이트
-=======
-                textView.setText("틀린 횟수 : "+count);
-            }
-        });
-    }
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private final Runnable check = new Runnable() {
         @Override
         public void run() {

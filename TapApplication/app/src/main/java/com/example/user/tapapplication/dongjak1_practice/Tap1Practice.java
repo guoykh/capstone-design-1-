@@ -25,11 +25,8 @@ import android.widget.Toast;
 
 import com.example.user.tapapplication.R;
 
-<<<<<<< HEAD
-=======
 import org.w3c.dom.Text;
 
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Delayed;
@@ -57,11 +54,9 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
     public static final String Device2_Char_U= "11591b7f-bce5-4e28-ac31-1e54c5c077b1";
     Button start;
     private UUID myUUID1, myUUID2;
-<<<<<<< HEAD
 
-=======
     public int count=0;
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
+
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
         switch(permsRequestCode){
@@ -126,7 +121,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
         start.setOnClickListener(new View.OnClickListener() { // 연습시작
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
+
                 if (blechecked) {
                     init();
                     //동작을 시작한다고 알림
@@ -148,10 +143,10 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                 else{
                     Toast.makeText(v.getContext(),"연결을 다시 시도해주세요",Toast.LENGTH_SHORT).show();
                 }
-=======
+
                 TextView textView = findViewById(R.id.count_text);
                 textView.setText("틀린 횟수 : "+count);
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
+
             }
         });
     }
@@ -280,11 +275,10 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                     if (data1 == 2) {
                         characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
                         boolean X = gatt.writeCharacteristic(characteristic);
-<<<<<<< HEAD
-=======
+
                         count++;
 
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
+
                         if (X) {
                             Log.d("Send","data 보내기 성공");
                         }

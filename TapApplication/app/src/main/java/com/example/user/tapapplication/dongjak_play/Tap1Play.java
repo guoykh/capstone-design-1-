@@ -29,7 +29,6 @@ import android.widget.VideoView;
 import com.example.user.tapapplication.R;
 
 import java.util.UUID;
-<<<<<<< HEAD
 import android.widget.ListAdapter;
 import android.widget.ToggleButton;
 import android.widget.ListView;
@@ -39,10 +38,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.Cursor;
 
-=======
-
-
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallback {
     Button button,practice;
     VideoView video;
@@ -60,71 +55,6 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;    private boolean IsScanning;
-    String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
-    static final int PERMISSION_REQUEST_CODE=1;
-    private static final int REQUEST_ENABLE_BT=2;
-    public Handler handler;
-    public boolean blechecked = false;
-    private static final String TAG = "BLEDevice";
-    private BluetoothAdapter Adapter;
-    private BluetoothDevice Device1=null, Device2=null;
-    private BluetoothGatt ConnGatt1,ConnGatt2;
-    private BluetoothGattService disService1, disService2;
-    private BluetoothGattCharacteristic characteristic1, characteristic2;
-    private int Status1,Status2;
-    private boolean running = true;
-    public int data1=-1, data2=-1;
-    Button start;
-
-    public int count=0;
-    @Override
-    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
-        switch(permsRequestCode){
-
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
-                    boolean Accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                        if (!Accepted  )
-                        {
-                            showDialogforPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다.");
-                            return;
-                        }else
-                        {
-                            //이미 사용자에게 퍼미션 허가를 받음.
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
-    private void showDialogforPermission(String msg) {
-
-        final AlertDialog.Builder myDialog = new AlertDialog.Builder( this);
-        myDialog.setTitle("알림");
-        myDialog.setMessage(msg);
-        myDialog.setCancelable(false);
-        myDialog.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(PERMISSIONS, PERMISSION_REQUEST_CODE);
-                }
-
-            }
-        });
-        myDialog.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                finish();
-            }
-        });
-        myDialog.show();
-    }
-
-
-    private boolean IsScanning;
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
     private static final int REQUEST_ENABLE_BT=2;
@@ -241,7 +171,6 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.count_text);
-<<<<<<< HEAD
                 textView.setText(""+count);
             }
         });
@@ -320,12 +249,6 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         }
     }
     // http://webnautes.tistory.com/830 참고사이트
-=======
-                textView.setText("틀린 횟수 : "+count);
-            }
-        });
-    }
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private final Runnable check = new Runnable() {
         @Override
         public void run() {

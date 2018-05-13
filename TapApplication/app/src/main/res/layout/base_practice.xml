@@ -25,16 +25,12 @@
         android:text="start"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="65dp" />
-<<<<<<< HEAD
-=======
 
     <TextView
         android:id="@+id/count_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="틀린 횟수 : 0"
+        android:text="0"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="291dp" />
-
->>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 </android.support.constraint.ConstraintLayout>
