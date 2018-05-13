@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.example.user.tapapplication.Bluetooth_contact.Ble_MainActivity;
 
-
 public class MainActivity extends AppCompatActivity{
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
@@ -72,10 +71,10 @@ public class MainActivity extends AppCompatActivity{
 
         Adapter = BluetoothAdapter.getDefaultAdapter();
         //블루투스 활성화인지 체크
-//        if(!Adapter.isEnabled()){
-//            Intent btintent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(btintent,REQUEST_ENABLE_BT);
-//        }
+        if(!Adapter.isEnabled()){
+            Intent btintent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(btintent,REQUEST_ENABLE_BT);
+        }
 
     }
 

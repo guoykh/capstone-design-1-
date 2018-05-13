@@ -19,7 +19,25 @@
         tools:layout_editor_absoluteY="0dp" />
 
 
+    <Button
+        android:id="@+id/practice_start"
+        android:layout_width="76dp"
+        android:layout_height="38dp"
+        android:layout_above="@+id/startbtn"
+        android:layout_toStartOf="@+id/count_text"
+        android:text="확인"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="65dp" />
 
+    <TextView
+        android:id="@+id/count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startbtn"
+        android:layout_centerHorizontal="true"
+        android:text="틀린 횟수 : 0"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="291dp" />
 
     <Button
         android:id="@+id/startbtn"
@@ -74,15 +92,5 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         android:textSize="40dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="66dp"
-        android:layout_height="39dp"
-        android:layout_alignBottom="@+id/tap_name"
-        android:layout_alignEnd="@+id/practice"
-        android:onClick="onClickStar1"
-        android:text="ToggleButton"
-        />
 
 </RelativeLayout>

@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.example.user.tapapplication.R;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Delayed;
 
@@ -42,13 +45,16 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
     private BluetoothGatt ConnGatt1,ConnGatt2;
     private BluetoothGattService disService1, disService2;
     private BluetoothGattCharacteristic characteristic1, characteristic2;
-    public BluetoothGattDescriptor descriptor1, descriptor2;
     private int Status1,Status2;
     private boolean running = true;
     public int data1=-1, data2=-1;
-    public static final String De_UUID= "00002902-0001-1000-8000-00805f9b34fb";
+    public static final String Device1_Serv_U= "7c3f5818-3255-4307-b138-158e09ec8130";
+    public static final String Device1_Char_U= "f71d47a6-fb4e-4c87-9be9-1b2bea79a2db";
+    public static final String Device2_Serv_U= "d6e6a169-1a81-4ff4-a2b6-66534e32bebe";
+    public static final String Device2_Char_U= "11591b7f-bce5-4e28-ac31-1e54c5c077b1";
     Button start;
-
+    private UUID myUUID1, myUUID2;
+    public int count=0;
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
         switch(permsRequestCode){
@@ -98,7 +104,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_practice);
+        setContentView(R.layout.dongjak_play);
 
         handler = new Handler();
         Adapter = BluetoothAdapter.getDefaultAdapter();
@@ -113,27 +119,8 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
         start.setOnClickListener(new View.OnClickListener() { // 연습시작
             @Override
             public void onClick(View v) {
-                if (blechecked) {
-                    init();
-                    //Tap1 동작을 시작한다고 알림
-                    characteristic1.setValue(20, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                    boolean X = ConnGatt1.writeCharacteristic(characteristic1);
-                    if (X) {
-                        Log.d("Send 1", "보내기 성공");
-                    } else {
-                        Log.d("", "sending is failed : taptap1");
-                    }
-                    characteristic2.setValue(20, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                    boolean Y = ConnGatt2.writeCharacteristic(characteristic2);
-                    if (Y) {
-                        Log.d("Send 2", "보내기 성공");
-                    } else {
-                        Log.d("", "sending is failed : taptap2");
-                    }
-                }
-                else{
-                    Toast.makeText(v.getContext(),"연결을 다시 시도해주세요",Toast.LENGTH_SHORT).show();
-                }
+                TextView textView = findViewById(R.id.count_text);
+                textView.setText("틀린 횟수 : "+count);
             }
         });
     }
@@ -196,20 +183,20 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
 
     private void setNotifySensor(BluetoothGatt gatt){
         BluetoothDevice device = gatt.getDevice();
-            if(("TapTap1").equals(device.getName())) {
+        if(("TapTap1").equals(device.getName())) {
             disService1 = gatt.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
             characteristic1 = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
             boolean a = gatt.setCharacteristicNotification(characteristic1, true);
             if (a) {
                 Log.d("setNotifySensor", "Tap1 Success");
             }
-            descriptor1 = characteristic1.getDescriptor(UUID.fromString(De_UUID));
+            BluetoothGattDescriptor descriptor1 = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
             Log.i("Descriptor","Descriptor1 is "+descriptor1);
             descriptor1.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             Log.i("Descriptor","Descriptor1 write: "+gatt.writeDescriptor(descriptor1));
             SystemClock.sleep(500);
-    }
-    /*    if(("TapTap2").equals(device.getName())) {
+        }
+        if(("TapTap2").equals(device.getName())) {
             disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
             characteristic2 = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
             boolean a = gatt.setCharacteristicNotification(characteristic2, true);
@@ -220,7 +207,7 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
             Log.i("Descriptor","Descriptor2 is "+descriptor2);
             descriptor2.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             Log.i("Descriptor","Descriptor2 write: "+gatt.writeDescriptor(descriptor2));
-        }*/
+        }
 
     }
 
@@ -248,7 +235,6 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                 Log.d("called","onServicesDiscovered called");
                 setNotifySensor(gatt);
             }
-
         };
 
         @Override // 아두이노 수신부
@@ -260,6 +246,18 @@ public class Tap1Practice extends AppCompatActivity implements BluetoothAdapter.
                 if(i>0 && i<3){
                     data1 = i;
                     Log.d("Read","data1 was read : "+data1);
+                    if (data1 == 2) {
+                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
+                        boolean X = gatt.writeCharacteristic(characteristic);
+                        count++;
+
+                        if (X) {
+                            Log.d("Send","data 보내기 성공");
+                        }
+                        else{
+                            Log.d("", "sending is failed : taptap1");
+                        }
+                    }
                 }
                 if(i>3 && i<6){
                     data2 = i;
