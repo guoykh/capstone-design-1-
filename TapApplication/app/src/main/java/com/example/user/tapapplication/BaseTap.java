@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.user.tapapplication.dongjak_play.BallchPlay;
 import com.example.user.tapapplication.dongjak_play.BalldrPlay;
 import com.example.user.tapapplication.dongjak_play.BrushPlay;
+import com.example.user.tapapplication.dongjak_play.BuffPlay;
 import com.example.user.tapapplication.dongjak_play.CrampPlay;
 import com.example.user.tapapplication.dongjak_play.DigPlay;
 import com.example.user.tapapplication.dongjak_play.DragPlay;
@@ -54,7 +55,7 @@ public class BaseTap extends Activity{
                         startActivity(i);
                         break;
                     case "버팔로":
-                        i = new Intent(BaseTap.this, DigPlay.class);
+                        i = new Intent(BaseTap.this, BuffPlay.class);
                         startActivity(i);
                         break;
                     case "볼 드롭":

@@ -19,16 +19,41 @@
         tools:layout_editor_absoluteY="0dp" />
 
 
+    <Button
+        android:id="@+id/practice_start"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/startbtn"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="115dp"
+        android:background="@android:drawable/editbox_background"
+        android:text="확인"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="60dp" />
 
+    <TextView
+        android:id="@+id/count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/practice_start"
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/practice_start"
+        android:text="0"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="13dp"
+        tools:layout_editor_absoluteY="21dp" />
 
     <Button
         android:id="@+id/startbtn"
-        android:layout_width="120dp"
-        android:layout_height="95dp"
+        android:layout_width="118dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
 
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="73dp"
         android:layout_marginStart="48dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,19 +66,34 @@
 
     <Button
         android:id="@+id/practice"
-        android:layout_width="116dp"
-        android:layout_height="91dp"
-        android:layout_alignTop="@+id/startbtn"
+        android:layout_width="110dp"
+        android:layout_height="51dp"
 
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/startbtn"
+        android:layout_alignBottom="@+id/startbtn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="40dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.934" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="66dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/tap_name"
+        android:layout_alignEnd="@+id/practice"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onClickStar1"
+        android:text="ToggleButton"
+        />
 
     <VideoView
         android:id="@+id/footprint"
@@ -74,15 +114,5 @@
         android:layout_marginTop="20dp"
         android:text="TextView"
         android:textSize="40dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="66dp"
-        android:layout_height="39dp"
-        android:layout_alignBottom="@+id/tap_name"
-        android:layout_alignEnd="@+id/practice"
-        android:onClick="onClickStar1"
-        android:text="ToggleButton"
-        />
 
 </RelativeLayout>
