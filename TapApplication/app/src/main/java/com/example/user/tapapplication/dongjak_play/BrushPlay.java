@@ -1,4 +1,4 @@
-﻿package com.example.user.tapapplication.dongjak_play;
+package com.example.user.tapapplication.dongjak_play;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,9 +13,12 @@ import android.bluetooth.BluetoothProfile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+<<<<<<< HEAD
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,19 +32,26 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+<<<<<<< HEAD
 import android.widget.ToggleButton;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import android.widget.VideoView;
 
 import com.example.user.tapapplication.R;
 
 import java.util.UUID;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 
 public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallback {
     Button button,practice;
     VideoView video;
+<<<<<<< HEAD
     ToggleButton toggle;
     private final String dbName = "webnautes";
     private final String tableName = "person";
@@ -56,6 +66,9 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
+=======
+
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private boolean IsScanning;
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
@@ -151,6 +164,7 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
                 handler.post(check); // 기기 연결 체크
             }
         });
+<<<<<<< HEAD
         personList = new ArrayList<HashMap<String, String>>();
 
         showList();
@@ -161,6 +175,9 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
         }
+=======
+
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -173,6 +190,7 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.count_text);
+<<<<<<< HEAD
                 textView.setText(""+count);
             }
         });
@@ -251,6 +269,12 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
     }
     // http://webnautes.tistory.com/830 참고사이트
 
+=======
+                textView.setText("틀린 횟수 : "+count);
+            }
+        });
+    }
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private final Runnable check = new Runnable() {
         @Override
         public void run() {

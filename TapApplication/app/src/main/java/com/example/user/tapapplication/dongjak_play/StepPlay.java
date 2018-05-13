@@ -1,4 +1,4 @@
-﻿package com.example.user.tapapplication.dongjak_play;
+package com.example.user.tapapplication.dongjak_play;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,6 +29,7 @@ import android.widget.VideoView;
 import com.example.user.tapapplication.R;
 
 import java.util.UUID;
+<<<<<<< HEAD
 import android.widget.ListAdapter;
 import android.widget.ToggleButton;
 import android.widget.ListView;
@@ -55,6 +56,14 @@ public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallbac
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
+=======
+
+
+public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallback {
+    Button button,practice;
+    VideoView video;
+
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private boolean IsScanning;
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
@@ -150,6 +159,7 @@ public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallbac
                 handler.post(check); // 기기 연결 체크
             }
         });
+<<<<<<< HEAD
         personList = new ArrayList<HashMap<String, String>>();
 
         showList();
@@ -160,6 +170,9 @@ public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallbac
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
         }
+=======
+
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -172,6 +185,7 @@ public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallbac
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.count_text);
+<<<<<<< HEAD
                 textView.setText(""+count);
             }
         });
@@ -252,6 +266,12 @@ public class StepPlay extends Activity implements BluetoothAdapter.LeScanCallbac
     }
     // http://webnautes.tistory.com/830 참고사이트
 
+=======
+                textView.setText("틀린 횟수 : "+count);
+            }
+        });
+    }
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private final Runnable check = new Runnable() {
         @Override
         public void run() {
