@@ -13,9 +13,12 @@ import android.bluetooth.BluetoothProfile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+<<<<<<< HEAD
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,19 +32,26 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+<<<<<<< HEAD
 import android.widget.ToggleButton;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import android.widget.VideoView;
 
 import com.example.user.tapapplication.R;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 import java.util.UUID;
 
 
 public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallback {
     Button button,practice;
     VideoView video;
+<<<<<<< HEAD
     ToggleButton toggle;
     private final String dbName = "webnautes";
     private final String tableName = "person";
@@ -56,6 +66,9 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
+=======
+
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
     private boolean IsScanning;
     String[] PERMISSIONS = {"android.permission.ACCESS_COARSE_LOCATION"};
     static final int PERMISSION_REQUEST_CODE=1;
@@ -152,6 +165,7 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
                 handler.post(check); // 기기 연결 체크
             }
         });
+<<<<<<< HEAD
         personList = new ArrayList<HashMap<String, String>>();
         showList();
         if (toggle.isChecked()) {
@@ -161,6 +175,8 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
         }
+=======
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -174,6 +190,7 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.count_text);
+<<<<<<< HEAD
                 textView.setText(""+count);
             }
         });
@@ -515,6 +532,275 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
             init();
         }
     }
+=======
+                textView.setText("틀린 횟수 : "+count);
+            }
+        });
+    }
+    private final Runnable check = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("run","bluetoothcheck run");
+            startScan();
+            if(Device1 != null && Device2 != null) {
+                Log.d("run","연결 성공");
+                stopScan();
+                blechecked=true;
+                init();
+                Toast.makeText(BallchPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+            }
+            else if(Device1 != null && Device2 == null) {
+                Log.d("run","TapTap2 연결 안됨");
+                handler.postDelayed(check,1000); // 1초후 핸들러 post
+            }
+            else if(Device1 == null && Device2 != null) {
+                Log.d("run","TapTap1 연결 안됨");
+                handler.postDelayed(check,1000);
+            }
+            else{
+                Log.d("run","연결 안됨");
+                handler.postDelayed(check,1000);
+            }
+        }
+    };
+
+
+    @Override
+    public void onLeScan(final BluetoothDevice device, final int rssi,
+                         final byte[] scanRecord) {
+        Log.d("onLeScan","start");
+        if ("TapTap1".equals(device.getName())) {
+            Device1 = device;
+            Log.d("onLeScan","Device1 found");
+        }
+        if ("TapTap2".equals(device.getName())) {
+            Device2 = device;
+            Log.d("onLeScan","Device2 found");
+        }
+    }
+
+    private void startScan() {
+        if ((Adapter != null) && (!IsScanning)) {
+            Adapter.startLeScan(this);
+            IsScanning = true;
+        }
+    }
+
+    private void stopScan() {
+        if (Adapter != null) {
+            Adapter.stopLeScan(this);
+        }
+        IsScanning = false;
+    }
+
+    private void setNotifySensor(BluetoothGatt gatt){
+        BluetoothDevice device = gatt.getDevice();
+        if(("TapTap1").equals(device.getName())) {
+            disService1 = gatt.getService(UUID.fromString("7c3f5818-3255-4307-b138-158e09ec8130"));
+            characteristic1 = disService1.getCharacteristic(UUID.fromString("f71d47a6-fb4e-4c87-9be9-1b2bea79a2db"));
+            boolean a = gatt.setCharacteristicNotification(characteristic1, true);
+            if (a) {
+                Log.d("setNotifySensor", "Tap1 Success");
+            }
+            BluetoothGattDescriptor descriptor1 = characteristic1.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
+            Log.i("Descriptor","Descriptor1 is "+descriptor1);
+            descriptor1.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            Log.i("Descriptor","Descriptor1 write: "+gatt.writeDescriptor(descriptor1));
+            SystemClock.sleep(500);
+        }
+        if(("TapTap2").equals(device.getName())) {
+            disService2 = gatt.getService(UUID.fromString("d6e6a169-1a81-4ff4-a2b6-66534e32bebe"));
+            characteristic2 = disService2.getCharacteristic(UUID.fromString("11591b7f-bce5-4e28-ac31-1e54c5c077b1"));
+            boolean a = gatt.setCharacteristicNotification(characteristic2, true);
+            if(a){
+                Log.d("setNotifySensor","Tap2 Success");
+            }
+            BluetoothGattDescriptor descriptor2 = characteristic2.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
+            Log.i("Descriptor","Descriptor2 is "+descriptor2);
+            descriptor2.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            Log.i("Descriptor","Descriptor2 write: "+gatt.writeDescriptor(descriptor2));
+        }
+
+    }
+
+    private final BluetoothGattCallback mGattcallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status,
+                                            int newState) {
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                Log.d("onConnStateChanged","called");
+                Status1 = newState;
+                ConnGatt1.discoverServices();
+                Status2 = newState;
+                ConnGatt2.discoverServices();
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                Status1 = newState;
+                Status2 = newState;
+            }
+        };
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+
+            super.onServicesDiscovered(gatt, status);
+            if(status==BluetoothGatt.GATT_SUCCESS){
+                Log.d("called","onServicesDiscovered called");
+                setNotifySensor(gatt);
+            }
+        };
+
+        @Override // 아두이노 수신부
+        public void onCharacteristicRead(BluetoothGatt gatt,
+                                         BluetoothGattCharacteristic characteristic, int status) {
+            Log.d("onChaRead","CallBack Success");
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                switch (i){
+                    case 1:
+                        if(old_data == 1) {
+                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send","data 보내기 성공");
+                            }
+                            else{
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        break;
+                    case 2:
+                        if(old_data == 1) {
+                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        if(old_data == 3) {
+                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        else {
+                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        break;
+                    case 3:
+                        if(old_data == 3) {
+                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send","data 보내기 성공");
+                            }
+                            else{
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        break;
+                    case 4:
+                        if(old_data == 1) {
+                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        if(old_data == 3) {
+                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        else {
+                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = gatt.writeCharacteristic(characteristic);
+                            count++;
+
+                            if (X) {
+                                Log.d("Send", "data 보내기 성공");
+                            } else {
+                                Log.d("", "sending is failed");
+                            }
+                        }
+                        break;
+                }
+                old_data = i; // 검사가 완료 된 후 데이터는 과거 데이터가 되므로 저장
+            }
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt,
+                                            BluetoothGattCharacteristic characteristic){
+
+            Log.d("onCharacteristicChanged", "onCharacteristicChanged function is called");
+
+            if("TapTap1".equals(gatt.getDevice().getName())){
+                boolean newresult = ConnGatt1.readCharacteristic(characteristic);
+
+                if(newresult){
+                    Log.d("onCharacteristicChanged","TapTap1 was read");
+                    Log.d("onCharacteristicChanged","data1: "+data1+", data2: "+data2);
+                }
+                else{
+                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
+                }
+            }
+            if("TapTap2".equals(gatt.getDevice().getName())){
+                boolean newresult = ConnGatt2.readCharacteristic(characteristic);
+
+                if(newresult){
+                    Log.d("onCharacteristicChanged","TapTap2 was read");
+                    Log.d("onCharacteristicChanged","data2: "+data2);
+                }
+                else{
+                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
+                }
+            }
+
+        }
+
+    };
+
+    @Override
+    protected void onResume() { // setContentView(R.layout.check_send_data); 를 넣어서 호출을 해보자
+        super.onResume();
+        Log.d("","onResume start");
+        if(blechecked) {
+            init();
+        }
+    }
+>>>>>>> 26388e74dc163c6d6ceb05f8bc18d3e6e87c58ec
 
     @Override
     protected void onStop(){
