@@ -1,15 +1,34 @@
 package com.example.user.tapapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.example.user.tapapplication.dongjak_play.BallchPlay;
+import com.example.user.tapapplication.dongjak_play.BalldrPlay;
+import com.example.user.tapapplication.dongjak_play.BrushPlay;
+import com.example.user.tapapplication.dongjak_play.BuffPlay;
+import com.example.user.tapapplication.dongjak_play.CrampPlay;
+import com.example.user.tapapplication.dongjak_play.DigPlay;
+import com.example.user.tapapplication.dongjak_play.DragPlay;
+import com.example.user.tapapplication.dongjak_play.FlapPlay;
+import com.example.user.tapapplication.dongjak_play.HeeldrPlay;
+import com.example.user.tapapplication.dongjak_play.HopshuPlay;
+import com.example.user.tapapplication.dongjak_play.ShufflePlay;
+import com.example.user.tapapplication.dongjak_play.StampPlay;
+import com.example.user.tapapplication.dongjak_play.StepPlay;
+import com.example.user.tapapplication.dongjak_play.Tap1Play;
+import com.example.user.tapapplication.dongjak_play.Tap2Play;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,6 +114,80 @@ public class FavoriteTap extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),  se.getMessage(), Toast.LENGTH_LONG).show();
             Log.e("",  se.getMessage());
         }
+
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                HashMap<String,String> item = (HashMap<String, String>)parent.getItemAtPosition(position);
+                String str = item.get("name");
+                Intent i;
+                switch (str){
+                    case "드래그":
+                        i = new Intent(FavoriteTap.this, DragPlay.class);
+                        startActivity(i);
+                        break;
+                    case "딕":
+                        i = new Intent(FavoriteTap.this, DigPlay.class);
+                        startActivity(i);
+                        break;
+                    case "버팔로":
+                        i = new Intent(FavoriteTap.this, BuffPlay.class);
+                        startActivity(i);
+                        break;
+                    case "볼드롭":
+                        i = new Intent(FavoriteTap.this, BalldrPlay.class);
+                        startActivity(i);
+                        break;
+                    case "볼 체인지":
+                        i = new Intent(FavoriteTap.this, BallchPlay.class);
+                        startActivity(i);
+                        break;
+                    case "브러쉬":
+                        i = new Intent(FavoriteTap.this, BrushPlay.class);
+                        startActivity(i);
+                        break;
+                    case "셔플":
+                        i = new Intent(FavoriteTap.this, ShufflePlay.class);
+                        startActivity(i);
+                        break;
+                    case "스탬프":
+                        i = new Intent(FavoriteTap.this, StampPlay.class);
+                        startActivity(i);
+                        break;
+                    case "스텝":
+                        i = new Intent(FavoriteTap.this, StepPlay.class);
+                        startActivity(i);
+                        break;
+                    case "크램프 롤":
+                        i = new Intent(FavoriteTap.this, CrampPlay.class);
+                        startActivity(i);
+                        break;
+                    case "탭1":
+                        i = new Intent(FavoriteTap.this, Tap1Play.class);
+                        startActivity(i);
+                        break;
+                    case "탭2":
+                        i = new Intent(FavoriteTap.this, Tap2Play.class);
+                        startActivity(i);
+                        break;
+                    case "플랩":
+                        i = new Intent(FavoriteTap.this, FlapPlay.class);
+                        startActivity(i);
+                        break;
+                    case "홉셔플":
+                        i = new Intent(FavoriteTap.this, HopshuPlay.class);
+                        startActivity(i);
+                        break;
+                    case "힐드롭":
+                        i = new Intent(FavoriteTap.this, HeeldrPlay.class);
+                        startActivity(i);
+                        break;
+                }
+
+            }
+        });
 
     }
 
