@@ -76,8 +76,8 @@ public class FavoriteTap extends AppCompatActivity {
             //화면에 보여주기 위해 Listview에 연결합니다.
             list.setAdapter(adapter);
         } catch (SQLiteException se) {
-            Toast.makeText(getApplicationContext(),  se.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("",  se.getMessage());
+            //Toast.makeText(getApplicationContext(),  se.getMessage(), Toast.LENGTH_LONG).show();
+            //Log.e("",  se.getMessage());
         }
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,62 +90,77 @@ public class FavoriteTap extends AppCompatActivity {
                     case "드래그":
                         i = new Intent(FavoriteTap.this, DragPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "딕":
                         i = new Intent(FavoriteTap.this, DigPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "버팔로":
                         i = new Intent(FavoriteTap.this, BuffPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "볼드롭":
                         i = new Intent(FavoriteTap.this, BalldrPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "볼 체인지":
                         i = new Intent(FavoriteTap.this, BallchPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "브러쉬":
                         i = new Intent(FavoriteTap.this, BrushPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "셔플":
                         i = new Intent(FavoriteTap.this, ShufflePlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "스탬프":
                         i = new Intent(FavoriteTap.this, StampPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "스텝":
                         i = new Intent(FavoriteTap.this, StepPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "크램프 롤":
                         i = new Intent(FavoriteTap.this, CrampPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "탭1":
                         i = new Intent(FavoriteTap.this, Tap1Play.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "탭2":
                         i = new Intent(FavoriteTap.this, Tap2Play.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "플랩":
                         i = new Intent(FavoriteTap.this, FlapPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "홉셔플":
                         i = new Intent(FavoriteTap.this, HopshuPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                     case "힐드롭":
                         i = new Intent(FavoriteTap.this, HeeldrPlay.class);
                         startActivity(i);
+                        finish();
                         break;
                 }
             }

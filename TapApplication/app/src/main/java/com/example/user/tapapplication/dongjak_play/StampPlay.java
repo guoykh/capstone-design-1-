@@ -21,6 +21,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class StampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     Button button,practice;
     VideoView video;
     ToggleButton toggle;
+    ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
 
@@ -125,6 +127,8 @@ public class StampPlay extends Activity implements BluetoothAdapter.LeScanCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dongjak_play);
         toggle=(ToggleButton)findViewById(R.id.toggleButton);
+        iv=(ImageView)findViewById(R.id.imageView3);
+        //iv.setImageResource(R.drawable.first);
         TextView tv = findViewById(R.id.tap_name);
         tv.setText("스탬프");
 
@@ -181,10 +185,12 @@ public class StampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     public void onClickStar1(View v){
         if (toggle.isChecked()){
             toggle.setBackgroundDrawable(getResources().
-                    getDrawable(R.drawable.starclick));}
+                    getDrawable(R.drawable.starclick));
+            Toast.makeText(StampPlay.this,"즐겨찾기 추가",Toast.LENGTH_SHORT).show();}
         else{
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
+            Toast.makeText(StampPlay.this,"즐겨찾기 해제",Toast.LENGTH_SHORT).show();
         }
         try {
 
@@ -369,25 +375,26 @@ public class StampPlay extends Activity implements BluetoothAdapter.LeScanCallba
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if(i>0 && i<3){
-                    data1 = i;
-                    Log.d("Read","data1 was read : "+data1);
-                    if (data1 == 2) {
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
-                        boolean X = gatt.writeCharacteristic(characteristic);
-                        count++;
+                if (i == 18) iv.setImageResource(R.drawable.right);
+                if(i==4 | i==1 | i==2 | i==3){
+                    characteristic.setValue(21, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = gatt.writeCharacteristic(characteristic);
+                    if (i==4)
+                        iv.setImageResource(R.drawable.right4);
+                    if (i==1)
+                        iv.setImageResource(R.drawable.left1);
+                    if (i==2)
+                        iv.setImageResource(R.drawable.left2);
+                    if (i==3)
+                        iv.setImageResource(R.drawable.rignt3);
+                    count++;
 
-                        if (X) {
-                            Log.d("Send","data 보내기 성공");
-                        }
-                        else{
-                            Log.d("", "sending is failed : taptap1");
-                        }
+                    if (X) {
+                        Log.d("Send","data 보내기 성공");
                     }
-                }
-                if(i>3 && i<6){
-                    data2 = i;
-                    Log.d("Read","data2 was read : "+data2);
+                    else{
+                        Log.d("", "sending is failed");
+                    }
                 }
             }
         }

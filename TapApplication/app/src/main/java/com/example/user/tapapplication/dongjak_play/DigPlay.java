@@ -24,6 +24,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.MediaController;
@@ -43,6 +44,7 @@ public class DigPlay extends Activity implements BluetoothAdapter.LeScanCallback
     Button button,practice;
     VideoView video;
     ToggleButton toggle;
+    ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
 
@@ -128,7 +130,8 @@ public class DigPlay extends Activity implements BluetoothAdapter.LeScanCallback
         toggle=(ToggleButton)findViewById(R.id.toggleButton);
         TextView tv = findViewById(R.id.tap_name);
         tv.setText("딕");
-
+        iv=(ImageView)findViewById(R.id.imageView3);
+       // iv.setImageResource(R.drawable.first);
         button = (Button)findViewById(R.id.startbtn);
         video = (VideoView)findViewById(R.id.footprint);
         String uriPath = "android.resource://"+getPackageName()+"/"+R.raw.dig;
@@ -181,10 +184,12 @@ public class DigPlay extends Activity implements BluetoothAdapter.LeScanCallback
     public void onClickStar1(View v){
         if (toggle.isChecked()){
             toggle.setBackgroundDrawable(getResources().
-                    getDrawable(R.drawable.starclick));}
+                    getDrawable(R.drawable.starclick));
+            Toast.makeText(DigPlay.this,"즐겨찾기 추가",Toast.LENGTH_SHORT).show();}
         else{
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
+            Toast.makeText(DigPlay.this,"즐겨찾기 해제",Toast.LENGTH_SHORT).show();
         }
         try {
 

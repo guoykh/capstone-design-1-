@@ -24,6 +24,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.MediaController;
@@ -42,6 +43,7 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     Button button,practice;
     VideoView video;
     ToggleButton toggle;
+    ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
 
@@ -124,6 +126,8 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dongjak_play);
+        iv=(ImageView)findViewById(R.id.imageView3);
+        //iv.setImageResource(R.drawable.first);
         toggle=(ToggleButton)findViewById(R.id.toggleButton);
         TextView tv = findViewById(R.id.tap_name);
         tv.setText("크램프 롤");
@@ -180,10 +184,12 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     public void onClickStar1(View v){
         if (toggle.isChecked()){
             toggle.setBackgroundDrawable(getResources().
-                    getDrawable(R.drawable.starclick));}
+                    getDrawable(R.drawable.starclick));
+            Toast.makeText(CrampPlay.this,"즐겨찾기 추가",Toast.LENGTH_SHORT).show();}
         else{
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
+            Toast.makeText(CrampPlay.this,"즐겨찾기 해제",Toast.LENGTH_SHORT).show();
         }
         try {
 

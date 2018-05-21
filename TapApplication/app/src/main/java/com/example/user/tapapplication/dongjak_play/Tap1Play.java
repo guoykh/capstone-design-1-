@@ -21,6 +21,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
     Button button,practice;
     VideoView video;
     ToggleButton toggle;
+    ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
 
@@ -124,6 +126,8 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dongjak_play);
         toggle=(ToggleButton)findViewById(R.id.toggleButton);
+        iv = (ImageView)findViewById(R.id.imageView3);
+        //iv.setImageResource(R.drawable.first);
         TextView tv = findViewById(R.id.tap_name);
         tv.setText("탭1");
 
@@ -179,10 +183,12 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
     public void onClickStar1(View v){
         if (toggle.isChecked()){
             toggle.setBackgroundDrawable(getResources().
-                    getDrawable(R.drawable.starclick));}
+                    getDrawable(R.drawable.starclick));
+            Toast.makeText(Tap1Play.this,"즐겨찾기 추가",Toast.LENGTH_SHORT).show();}
         else{
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
+            Toast.makeText(Tap1Play.this,"즐겨찾기 해제",Toast.LENGTH_SHORT).show();
         }
         try {
 
@@ -367,9 +373,16 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if(i==4){
+                if (i==3) iv.setImageResource(R.drawable.rignt3);
+                if(i==4 | i==1 | i==2 ){
                     characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                     boolean X = gatt.writeCharacteristic(characteristic);
+                    if (i==4)
+                        iv.setImageResource(R.drawable.right4);
+                    if (i==1)
+                        iv.setImageResource(R.drawable.left1);
+                    if (i==2)
+                        iv.setImageResource(R.drawable.left2);
                     count++;
 
                     if (X) {

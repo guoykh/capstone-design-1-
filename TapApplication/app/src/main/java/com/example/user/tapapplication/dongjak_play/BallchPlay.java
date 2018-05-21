@@ -24,6 +24,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.MediaController;
@@ -43,6 +45,7 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
     Button button,practice;
     VideoView video;
     ToggleButton toggle;
+    ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
 
@@ -126,6 +129,8 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dongjak_play);
+        iv=(ImageView)findViewById(R.id.imageView3);
+        //iv.setImageResource(R.drawable.first);
         toggle=(ToggleButton)findViewById(R.id.toggleButton);
         TextView tv = findViewById(R.id.tap_name);
         tv.setText("볼 체인지");
@@ -181,10 +186,13 @@ public class BallchPlay extends Activity implements BluetoothAdapter.LeScanCallb
     public void onClickStar1(View v){
         if (toggle.isChecked()){
             toggle.setBackgroundDrawable(getResources().
-                    getDrawable(R.drawable.starclick));}
+                    getDrawable(R.drawable.starclick));
+            Toast.makeText(BallchPlay.this,"즐겨찾기 추가",Toast.LENGTH_SHORT).show();
+        }
         else{
             toggle.setBackgroundDrawable(getResources().
                     getDrawable(R.drawable.staroff));
+            Toast.makeText(BallchPlay.this,"즐겨찾기 해제",Toast.LENGTH_SHORT).show();
         }
         try {
 
