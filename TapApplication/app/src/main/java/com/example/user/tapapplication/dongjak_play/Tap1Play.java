@@ -266,6 +266,8 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
                 blechecked=true;
                 init();
                 Toast.makeText(Tap1Play.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+                //iv.invalidate();
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -371,19 +373,55 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic, int status) {
             Log.d("onChaRead","CallBack Success");
+
+
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if (i==3) iv.setImageResource(R.drawable.rignt3);
-                if(i==4 | i==1 | i==2 ){
-                    characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                    boolean X = gatt.writeCharacteristic(characteristic);
-                    if (i==4)
-                        iv.setImageResource(R.drawable.right4);
-                    if (i==1)
-                        iv.setImageResource(R.drawable.left1);
-                    if (i==2)
-                        iv.setImageResource(R.drawable.left2);
-                    count++;
+                if (i==3) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.rignt3);
+                            iv.invalidate();
+                        }
+                    });
+                    //iv.setImageResource(R.drawable.rignt3);
+                   // iv.invalidate();
+                }
+
+                if(i==4 || i==1 || i==2){
+                    characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                    if (i==4) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
 
                     if (X) {
                         Log.d("Send","data 보내기 성공");
