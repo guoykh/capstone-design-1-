@@ -21,7 +21,7 @@
         android:layout_width="138dp"
         android:layout_height="78dp"
 
-        android:background="@android:color/transparent"
+        android:background="@drawable/basic"
         android:onClick="onClickBase"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -33,13 +33,11 @@
         tools:ignore="MissingConstraints" />
 
 
-
-
     <Button
         android:id="@+id/favbtn"
-        android:layout_width="122dp"
+        android:layout_width="131dp"
         android:layout_height="77dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/book"
         android:onClick="onClickFav"
 
         android:textSize="16sp"
@@ -54,8 +52,9 @@
     <Button
         android:id="@+id/batbtn"
         android:layout_width="133dp"
-        android:layout_height="73dp"
-        android:background="@android:color/transparent"
+        android:layout_height="94dp"
+        android:background="@drawable/batt"
+
         android:onClick="onClickCheck"
 
         android:textSize="17sp"

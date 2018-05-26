@@ -268,6 +268,7 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
                 blechecked=true;
                 init();
                 Toast.makeText(HeeldrPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -375,12 +376,60 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if (i==4) iv.setImageResource(R.drawable.right4);
-                if (i==2) iv.setImageResource(R.drawable.left2);
+                if (i==4) {
+                    runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        iv.setImageResource(R.drawable.right4);
+                        iv.invalidate();
+                    }
+                });
+                }
+
+
+                if (i==2) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.left2);
+                            iv.invalidate();
+                        }
+                    });
+
+                }
                 if (i==3){
                     characteristic.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                     boolean X = gatt.writeCharacteristic(characteristic);
-                    iv.setImageResource(R.drawable.rignt3);
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.rignt3);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (X) {
+                        Log.d("Send","data 보내기 성공");
+                    }
+                    else{
+                        Log.d("", "sending is failed");
+                    }
+                }
+                if (i==18){
+                    characteristic.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = gatt.writeCharacteristic(characteristic);
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
                     if (X) {
                         Log.d("Send","data 보내기 성공");
                     }
@@ -389,10 +438,19 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
                     }
                 }
 
-                if (i==1){
+                if (i==17){
                     characteristic.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                     boolean X = gatt.writeCharacteristic(characteristic);
-                    iv.setImageResource(R.drawable.left1);
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
                     if (X) {
                         Log.d("Send","data 보내기 성공");
                     }
@@ -400,7 +458,29 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         Log.d("", "sending is failed");
                     }
                 }
-                count++;
+
+
+                if (i==1){
+                    characteristic.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = gatt.writeCharacteristic(characteristic);
+                    {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (X) {
+                        Log.d("Send","data 보내기 성공");
+                    }
+                    else{
+                        Log.d("", "sending is failed");
+                    }
+                }
+
             }
         }
 
