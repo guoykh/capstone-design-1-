@@ -50,6 +50,8 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
     private final String[] name = new String[]{"힐드롭"};
     private final String[] phone = new String[]{"1"};
 
+    private boolean stay = false;
+
     ArrayList<HashMap<String, String>> personList;
     ListView list;
     private static final String TAG_NAME = "name";
@@ -269,6 +271,8 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
                 init();
                 Toast.makeText(HeeldrPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
                 iv.setImageResource(R.drawable.first);
+                handler.postDelayed(moving,8000);
+
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -286,6 +290,14 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
     };
 
 
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(HeeldrPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
                          final byte[] scanRecord) {
@@ -376,14 +388,15 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                stay=true;
                 if (i==4) {
                     runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        iv.setImageResource(R.drawable.right4);
-                        iv.invalidate();
-                    }
-                });
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.right4);
+                            iv.invalidate();
+                        }
+                    });
                 }
 
 
@@ -550,6 +563,10 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -575,6 +592,10 @@ public class HeeldrPlay extends Activity implements BluetoothAdapter.LeScanCallb
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

@@ -42,7 +42,8 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
     public boolean blechecked = false;
     private static final String TAG = "BLEDevice";
     private BluetoothAdapter Adapter;
-    private BluetoothDevice Device1=null, Device2=null;
+    private BluetoothDevice Device1=null;
+    private BluetoothDevice Device2=null;
     private BluetoothGatt ConnGatt1,ConnGatt2;
     private BluetoothGattService disService1, disService2;
     private BluetoothGattCharacteristic characteristic1, characteristic2;
@@ -185,6 +186,16 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
                         });
                         left_text.setText("20% 이상");
                         break;
+                    case 110:
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                left_img.setImageResource(R.drawable.batt20);
+                                left_img.invalidate();
+                            }
+                        });
+                        left_text.setText("20% 미만");
+                        break;
                 }
             }
             if (view.getId() == R.id.right) {
@@ -250,6 +261,16 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
                             }
                         });
                         right_text.setText("20% 이상");
+                        break;
+                    case 110:
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                right_img.setImageResource(R.drawable.batt20);
+                                right_img.invalidate();
+                            }
+                        });
+                        right_text.setText("20% 미만");
                         break;
                 }
             }
@@ -384,7 +405,6 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
         super.onResume();
         Log.d("","onResume start");
         if(blechecked) {
-            handler.post(check);
             init();
         }
     }
@@ -413,9 +433,10 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
         if(blechecked){
             blechecked=false;
         }
-        Device1 = null;
-        Device2 = null;
-    }
+        Adapter = BluetoothAdapter.getDefaultAdapter();
+        stopScan();
+        handler.removeCallbacks(check);
+}
 
     @Override
     protected void onDestroy() {
@@ -443,6 +464,9 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
         }
         Device1 = null;
         Device2 = null;
+        Adapter = BluetoothAdapter.getDefaultAdapter();
+        stopScan();
+        handler.removeCallbacks(check);
     }
 
     private void init() {
@@ -469,5 +493,6 @@ public class CheckBattery extends AppCompatActivity implements BluetoothAdapter.
                 return;
             }
         }
+
     }
 }

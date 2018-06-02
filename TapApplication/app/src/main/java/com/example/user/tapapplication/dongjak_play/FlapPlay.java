@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -47,6 +48,7 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
     ImageView iv;
     private final String dbName = "webnautes";
     private final String tableName = "person";
+    private boolean stay = false;
 
     private final String[] name = new String[]{"플랩"};
     private final String[] phone = new String[]{"1"};
@@ -267,6 +269,8 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
                 blechecked=true;
                 init();
                 Toast.makeText(FlapPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+                handler.postDelayed(moving,8000);
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -279,6 +283,14 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
             else{
                 Log.d("run","연결 안됨");
                 handler.postDelayed(check,1000);
+            }
+        }
+    };
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(FlapPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -374,17 +386,49 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if (i==3) iv.setImageResource(R.drawable.rignt3);
+                stay=true;
+                if (i==3) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.rignt3);
+                            iv.invalidate();
+                        }
+                    });
+                }
                 if(i==4 | i==1 | i==2 ){
-                    characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                    boolean X = gatt.writeCharacteristic(characteristic);
-                    if (i==4)
-                        iv.setImageResource(R.drawable.right4);
-                    if (i==1)
-                        iv.setImageResource(R.drawable.left1);
-                    if (i==2)
-                        iv.setImageResource(R.drawable.left2);
-                    count++;
+                    characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                    if (i==4) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
 
                     if (X) {
                         Log.d("Send","data 보내기 성공");
@@ -462,6 +506,10 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -487,6 +535,10 @@ public class FlapPlay extends Activity implements BluetoothAdapter.LeScanCallbac
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

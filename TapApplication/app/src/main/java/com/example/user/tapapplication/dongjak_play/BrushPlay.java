@@ -74,7 +74,11 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
     private boolean running = true;
     public int data1=-1, data2=-1;
     Button start;
+    private boolean stay = false;
 
+    public boolean wing = false; //진동이 울린 적이 있는 지 확인하는 변수
+    public int [] ans =  { 27,23,27,23,27,23 }; // 답 스위치 위치
+    public int arrint = 0;
     public int count=0;
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
@@ -269,6 +273,10 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
                 blechecked=true;
                 init();
                 Toast.makeText(BrushPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+
+                handler.postDelayed(moving,8000);
+
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -286,6 +294,14 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
     };
 
 
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(BrushPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
                          final byte[] scanRecord) {
@@ -375,26 +391,57 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
                                          BluetoothGattCharacteristic characteristic, int status) {
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if(i>0 && i<3){
-                    data1 = i;
-                    Log.d("Read","data1 was read : "+data1);
-                    if (data1 == 2) {
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
-                        boolean X = gatt.writeCharacteristic(characteristic);
-                        count++;
-
-                        if (X) {
-                            Log.d("Send","data 보내기 성공");
+                final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                stay=true;
+                if (i==3) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.rignt3);
+                            iv.invalidate();
                         }
-                        else{
-                            Log.d("", "sending is failed : taptap1");
-                        }
-                    }
+                    });
                 }
-                if(i>3 && i<6){
-                    data2 = i;
-                    Log.d("Read","data2 was read : "+data2);
+
+                if(i==4 || i==1 || i==2) {
+                    characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                    if (i == 4) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i == 1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i == 2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+
+                    if (X) {
+                        Log.d("Send", "data 보내기 성공");
+                    } else {
+                        Log.d("", "sending is failed");
+                    }
                 }
             }
         }
@@ -403,33 +450,67 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
         public void onCharacteristicChanged(BluetoothGatt gatt,
                                             BluetoothGattCharacteristic characteristic){
 
-            Log.d("onCharacteristicChanged", "onCharacteristicChanged function is called");
+
 
             if("TapTap1".equals(gatt.getDevice().getName())){
+
+                Log.d("onCharacteristicChanged", "onCharacteristicChanged (TapTap1) is called");
                 boolean newresult = ConnGatt1.readCharacteristic(characteristic);
 
+
                 if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap1 was read");
-                    Log.d("onCharacteristicChanged","data1: "+data1+", data2: "+data2);
+                   /* if(data1 == -1 )
+
+                        // 양쪽 다 붙어있지 않으면 진동 보냄
+                        if(arrint < 6) {
+                            if(data1 != 5) {
+
+                                if (data1 == 1) characteristic.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                else if (data1 == 2)characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                else characteristic.setValue(25, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+
+
+
+                                gatt.writeCharacteristic(characteristic);
+                                wing = true;
+
+                            }
+
+                        }*/
+
                 }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+
+
             }
+
+
             if("TapTap2".equals(gatt.getDevice().getName())){
+
+                Log.d("onCharacteristicChanged", "onCharacteristicChanged (TapTap2) is called");
                 boolean newresult = ConnGatt2.readCharacteristic(characteristic);
 
                 if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap2 was read");
-                    Log.d("onCharacteristicChanged","data2: "+data2);
+
+                   /* if(arrint < 6) {
+                        if(data2 != ans[arrint]) {
+                            //처음 각도가 틀리면 뒤쪽에 나중 각도가 틀리면 앞쪽에 진동
+                            if(data2 == 28) characteristic.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            else characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            gatt.writeCharacteristic(characteristic);
+                            wing = true;
+
+                        }
+                        arrint++;
+                    }
+                    if(arrint == 5) {
+
+                        if(wing) count++; //진동이 한 번이라도 울린 적이 있으면 틀린 횟수세는 변수 증가
+                    }*/
                 }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+
             }
 
         }
-
     };
 
     @Override
@@ -465,6 +546,10 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -490,6 +575,10 @@ public class BrushPlay extends Activity implements BluetoothAdapter.LeScanCallba
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

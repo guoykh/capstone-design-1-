@@ -49,6 +49,7 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
 
     private final String[] name = new String[]{"크램프 롤"};
     private final String[] phone = new String[]{"1"};
+    private boolean stay = false;
 
     ArrayList<HashMap<String, String>> personList;
     ListView list;
@@ -73,6 +74,7 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
     private boolean running = true;
     public int data1=-1, data2=-1;
     Button start;
+    int old_data = -1;
 
     public int count=0;
     @Override
@@ -267,6 +269,9 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
                 blechecked=true;
                 init();
                 Toast.makeText(CrampPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+                handler.postDelayed(moving,8000);
+
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -283,6 +288,14 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
         }
     };
 
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(CrampPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
@@ -374,26 +387,144 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if(i>0 && i<3){
-                    data1 = i;
-                    Log.d("Read","data1 was read : "+data1);
-                    if (data1 == 2) {
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
-                        boolean X = gatt.writeCharacteristic(characteristic);
-                        count++;
-
-                        if (X) {
-                            Log.d("Send","data 보내기 성공");
+                stay=true;
+                switch(i){
+                    case 1:
+                        if(old_data == 3) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left1);
+                                    iv.invalidate();
+                                }
+                            });
                         }
                         else{
-                            Log.d("", "sending is failed : taptap1");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left1);
+                                    iv.invalidate();
+                                }
+                            });
+                            if(old_data==1){
+                                characteristic2.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data==2){
+                                characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data==4){
+                                characteristic1.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt1.writeCharacteristic(characteristic1);
+                            }
+                            count++;
                         }
-                    }
+                        break;
+                    case 2:
+                        if(old_data == 4) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left2);
+                                    iv.invalidate();
+                                }
+                            });
+                        }
+                        else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left2);
+                                    iv.invalidate();
+                                }
+                            });
+                            if(old_data == 1) {
+                                characteristic2.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data == 3) {
+                                characteristic1.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt1.writeCharacteristic(characteristic1);
+                            }
+                            if(old_data==4){
+                                characteristic1.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt1.writeCharacteristic(characteristic1);
+                            }
+                            count++;
+                        }
+                        break;
+                    case 3:
+                        if(old_data == -1 || old_data == 2){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.rignt3);
+                                    iv.invalidate();
+                                }
+                            });
+                        }
+                        else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.rignt3);
+                                    iv.invalidate();
+                                }
+                            });
+
+                            if(old_data==1){
+                                characteristic2.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data==2){
+                                characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data==4){
+                                characteristic1.setValue(12, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt1.writeCharacteristic(characteristic1);
+                            }
+                            count++;
+                        }
+                        break;
+                    case 4:
+                        if(old_data == 1) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left2);
+                                    iv.invalidate();
+                                }
+                            });
+                        }
+                        else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    iv.setImageResource(R.drawable.left2);
+                                    iv.invalidate();
+                                }
+                            });
+                            if(old_data==1){
+                                characteristic2.setValue(14, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data==2){
+                                characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                            }
+                            if(old_data == 3) {
+                                characteristic1.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                                boolean X = ConnGatt1.writeCharacteristic(characteristic1);
+                            }
+                            count++;
+                        }
+                        break;
+
                 }
-                if(i>3 && i<6){
-                    data2 = i;
-                    Log.d("Read","data2 was read : "+data2);
-                }
+                old_data = i;
             }
         }
 
@@ -463,6 +594,10 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -488,6 +623,10 @@ public class CrampPlay extends Activity implements BluetoothAdapter.LeScanCallba
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

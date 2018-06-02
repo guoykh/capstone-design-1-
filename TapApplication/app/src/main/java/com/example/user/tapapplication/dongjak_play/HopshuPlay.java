@@ -54,6 +54,7 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
     ListView list;
     private static final String TAG_NAME = "name";
     private static final String TAG_PHONE ="phone";
+    private boolean stay = false;
 
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
@@ -268,6 +269,10 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                 blechecked=true;
                 init();
                 Toast.makeText(HopshuPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+                handler.postDelayed(moving,8000);
+
+
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -280,6 +285,15 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
             else{
                 Log.d("run","연결 안됨");
                 handler.postDelayed(check,1000);
+            }
+        }
+    };
+
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(HopshuPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -377,17 +391,22 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                stay=true;
                 switch (i){
-
-
                     case 1:
                         cnt++;
                         cnt_r=0;
-                        iv.setImageResource(R.drawable.left1);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
 
                         if(cnt > 3) {
-                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt2.writeCharacteristic(characteristic2);
                             count++;
 
                             if (X) {
@@ -399,7 +418,13 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         }
                         break;
                     case 2:
-                        iv.setImageResource(R.drawable.left2);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
                         if(old_data == 1 & cnt < 3) {
                             cnt=0;
                             cnt_r=0;
@@ -416,8 +441,8 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         if(old_data == 1 & cnt > 3) {
                             cnt=0;
                             cnt_r=0;
-                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt2.writeCharacteristic(characteristic2);
                             count++;
 
                             if (X) {
@@ -429,8 +454,8 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         if(old_data == 3 & cnt_r < 3) {
                             cnt=0;
                             cnt_r=0;
-                            characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt2.writeCharacteristic(characteristic2);
                             count++;
 
                             if (X) {
@@ -469,10 +494,16 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                     case 3:
                         cnt=0;
                         cnt_r++;
-                        iv.setImageResource(R.drawable.rignt3);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.rignt3);
+                                iv.invalidate();
+                            }
+                        });
                         if(old_data == 3 & cnt_r > 3) {
-                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic1.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt1.writeCharacteristic(characteristic1);
                             count++;
 
                             if (X) {
@@ -485,11 +516,17 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
 
                         break;
                     case 4:
-                        iv.setImageResource(R.drawable.right4);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
                         if(old_data == 1 & cnt<3) {
                             cnt=0;
-                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic1.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt1.writeCharacteristic(characteristic1);
                             count++;
 
                             if (X) {
@@ -524,8 +561,8 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         }
                         if(old_data == 3 & cnt_r >3) {
                             cnt_r=0;
-                            characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                            boolean X = gatt.writeCharacteristic(characteristic);
+                            characteristic1.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            boolean X = ConnGatt1.writeCharacteristic(characteristic1);
                             count++;
 
                             if (X) {
@@ -548,7 +585,13 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
                         break;
 
                     case 17:
-                        iv.setImageResource(R.drawable.left);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
                         characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                         boolean X = gatt.writeCharacteristic(characteristic);
                         count++;
@@ -563,8 +606,8 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
 
                     case 18:
                         iv.setImageResource(R.drawable.right);
-                        characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                        X = gatt.writeCharacteristic(characteristic);
+                        characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                        X = ConnGatt2.writeCharacteristic(characteristic2);
                         count++;
 
                         if (X) {
@@ -647,6 +690,10 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -672,6 +719,10 @@ public class HopshuPlay extends Activity implements BluetoothAdapter.LeScanCallb
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

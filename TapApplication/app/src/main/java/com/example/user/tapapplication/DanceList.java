@@ -29,9 +29,8 @@ import com.example.user.tapapplication.dongjak_play.StepPlay;
 import com.example.user.tapapplication.dongjak_play.Tap1Play;
 import com.example.user.tapapplication.dongjak_play.Tap2Play;
 
-public class BaseTap extends Activity{
-    private String[] items = {"딕","버팔로","볼 드롭","볼 체인지","브러쉬",
-            "셔플","스탬프","스텝","크램프 롤","탭1","탭2","플랩","홉 셔플","힐 드롭"};
+public class DanceList extends Activity{
+    private String[] items = {"exo - ko ko bop"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,68 +45,12 @@ public class BaseTap extends Activity{
                 String str = (String)parent.getAdapter().getItem(position);
                 Intent i;
                 switch (str){
-                    case "드래그":
-                        i = new Intent(BaseTap.this, DragPlay.class);
-                        startActivity(i);
-                        break;
-                    case "딕":
-                        i = new Intent(BaseTap.this, DigPlay.class);
-                        startActivity(i);
-                        break;
-                    case "버팔로":
-                        i = new Intent(BaseTap.this, BuffPlay.class);
-                        startActivity(i);
-                        break;
-                    case "볼 드롭":
-                        i = new Intent(BaseTap.this, BalldrPlay.class);
-                        startActivity(i);
-                        break;
-                    case "볼 체인지":
-                        i = new Intent(BaseTap.this, BallchPlay.class);
-                        startActivity(i);
-                        break;
-                    case "브러쉬":
-                        i = new Intent(BaseTap.this, BrushPlay.class);
-                        startActivity(i);
-                        break;
-                    case "셔플":
-                        i = new Intent(BaseTap.this, ShufflePlay.class);
-                        startActivity(i);
-                        break;
-                    case "스탬프":
-                        i = new Intent(BaseTap.this, StampPlay.class);
-                        startActivity(i);
-                        break;
-                    case "스텝":
-                        i = new Intent(BaseTap.this, StepPlay.class);
-                        startActivity(i);
-                        break;
-                    case "크램프 롤":
-                        i = new Intent(BaseTap.this, CrampPlay.class);
-                        startActivity(i);
-                        break;
-                    case "탭1":
-                        i = new Intent(BaseTap.this, Tap1Play.class);
-                        startActivity(i);
-                        break;
-                    case "탭2":
-                        i = new Intent(BaseTap.this, Tap2Play.class);
-                        startActivity(i);
-                        break;
-                    case "플랩":
-                        i = new Intent(BaseTap.this, FlapPlay.class);
-                        startActivity(i);
-                        break;
-                    case "홉 셔플":
-                        i = new Intent(BaseTap.this, HopshuPlay.class);
-                        startActivity(i);
-                        break;
-                    case "힐 드롭":
-                        i = new Intent(BaseTap.this, HeeldrPlay.class);
+                    case "exo - ko ko bop":
+                        i = new Intent(DanceList.this, DanceTap.class);
                         startActivity(i);
                         break;
                 }
-        }
+            }
         });
     }
 

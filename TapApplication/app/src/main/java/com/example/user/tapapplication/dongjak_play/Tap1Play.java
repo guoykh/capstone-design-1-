@@ -49,7 +49,7 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
 
     private final String[] name = new String[]{"drag", "탭1", "tap2"};
     private final String[] phone = new String[]{"1"};
-
+    private boolean stay = false;
     ArrayList<HashMap<String, String>> personList;
     ListView list;
     private static final String TAG_NAME = "name";
@@ -267,6 +267,7 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
                 init();
                 Toast.makeText(Tap1Play.this,"연결 성공",Toast.LENGTH_SHORT).show();
                 iv.setImageResource(R.drawable.first);
+                handler.postDelayed(moving,8000);
                 //iv.invalidate();
             }
             else if(Device1 != null && Device2 == null) {
@@ -283,7 +284,14 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
             }
         }
     };
-
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(Tap1Play.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
@@ -373,10 +381,9 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic, int status) {
             Log.d("onChaRead","CallBack Success");
-
-
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
+                stay=true;
                 if (i==3) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -385,8 +392,6 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
                             iv.invalidate();
                         }
                     });
-                    //iv.setImageResource(R.drawable.rignt3);
-                   // iv.invalidate();
                 }
 
                 if(i==4 || i==1 || i==2){
@@ -467,7 +472,7 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
     };
 
     @Override
-    protected void onResume() { // setContentView(R.layout.check_send_data); 를 넣어서 호출을 해보자
+    protected void onResume() {
         super.onResume();
         Log.d("","onResume start");
         if(blechecked) {
@@ -499,6 +504,10 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -524,6 +533,10 @@ public class Tap1Play extends Activity implements BluetoothAdapter.LeScanCallbac
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

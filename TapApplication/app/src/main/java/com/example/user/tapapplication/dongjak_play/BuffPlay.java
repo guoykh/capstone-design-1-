@@ -55,7 +55,7 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
     ListView list;
     private static final String TAG_NAME = "name";
     private static final String TAG_PHONE ="phone";
-
+    private boolean stay = false;
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
     private boolean IsScanning;
@@ -74,7 +74,9 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
     private boolean running = true;
     public int data1=-1, data2=-1;
     Button start;
-
+    public boolean wing = false; //진동이 울린 적이 있는 지 확인하는 변수
+    public int [] ans =  new int [] {4,4,4,4}; // 답 스위치 위치
+    public int arrint = 0;
     public int count=0;
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
@@ -270,6 +272,9 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
                 blechecked=true;
                 init();
                 Toast.makeText(BuffPlay.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+
+                handler.postDelayed(moving,8000);
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -285,7 +290,14 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
             }
         }
     };
-
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(BuffPlay.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
@@ -374,59 +386,126 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
         @Override // 아두이노 수신부
         public void onCharacteristicRead(BluetoothGatt gatt,
                                          BluetoothGattCharacteristic characteristic, int status) {
-            Log.d("onChaRead","CallBack Success");
+            Log.d("onChaRead", "CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if(i>0 && i<3){
+                final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                stay=true;
+                if (i > 0 && i < 3) { // data1에 1,2할당
                     data1 = i;
-                    Log.d("Read","data1 was read : "+data1);
-                    if (data1 == 2) {
-                        characteristic.setValue(3, BluetoothGattCharacteristic.FORMAT_UINT8, 0);//new byte[] { (byte) 3 });
+                    Log.d("Read", "data1 was read : " + data1);
+
+                    if (i==1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+
+                    }
+
+                    if (i==2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
+                        characteristic.setValue(11, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                         boolean X = gatt.writeCharacteristic(characteristic);
                         count++;
-
-                        if (X) {
-                            Log.d("Send","data 보내기 성공");
-                        }
-                        else{
-                            Log.d("", "sending is failed : taptap1");
-                        }
                     }
+
                 }
-                if(i>3 && i<6){
-                    data2 = i;
-                    Log.d("Read","data2 was read : "+data2);
+                if (i > 2 && i < 5) {
+                    data2 = i; //data2에 3,4 할당
+                    Log.d("Read", "data2 was read : " + data2);
+
+                    if (i==3) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.rignt3);
+                                iv.invalidate();
+                            }
+                        });
+
+                    }
+
+                    if (i==4) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
+                        characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                        boolean X = gatt.writeCharacteristic(characteristic);
+                        count++;
+                    }
                 }
             }
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt,
-                                            BluetoothGattCharacteristic characteristic){
+                                            BluetoothGattCharacteristic characteristic) {
 
-            Log.d("onCharacteristicChanged", "onCharacteristicChanged function is called");
 
-            if("TapTap1".equals(gatt.getDevice().getName())){
+            if ("TapTap1".equals(gatt.getDevice().getName())) {
+
+                Log.d("onCharacteristicChanged", "onCharacteristicChanged (TapTap1) is called");
                 boolean newresult = ConnGatt1.readCharacteristic(characteristic);
 
-                if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap1 was read");
-                    Log.d("onCharacteristicChanged","data1: "+data1+", data2: "+data2);
+
+                if (newresult) {
+
+
+                    /*// 현재 순서의 스위치가 아니면 진동 보냄
+                    if (arrint < 4) {
+                        if (data1 != ans[arrint]) {
+                            characteristic.setValue(10 + data1, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            gatt.writeCharacteristic(characteristic);
+                            wing = true;
+
+                        }
+                        arrint++;
+                    }
+                    if (arrint == 4) {
+                        if (wing) count++; //진동이 한 번이라도 울린 적이 있으면 틀린 횟수세는 변수 증가
+                    }*/
                 }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+
+
             }
-            if("TapTap2".equals(gatt.getDevice().getName())){
+
+
+            if ("TapTap2".equals(gatt.getDevice().getName())) {
+
+                Log.d("onCharacteristicChanged", "onCharacteristicChanged (TapTap2) is called");
                 boolean newresult = ConnGatt2.readCharacteristic(characteristic);
 
-                if(newresult){
-                    Log.d("onCharacteristicChanged","TapTap2 was read");
-                    Log.d("onCharacteristicChanged","data2: "+data2);
+                if (newresult) {
+
+                   /* if (arrint < 4) {
+                        if (data2 != ans[arrint]) {
+                            characteristic.setValue(10 + data2, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                            gatt.writeCharacteristic(characteristic);
+                            wing = true;
+
+                        }
+                        arrint++;
+
+                    }
+                    if (arrint == 4) {
+
+                        if (wing) count++; //진동이 한 번이라도 울린 적이 있으면 틀린 횟수세는 변수 증가
+                    }*/
                 }
-                else{
-                    Log.d("onCharacteristicChanged", "onCharacteristicChanged reading failed");
-                }
+
             }
 
         }
@@ -466,6 +545,10 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -491,6 +574,10 @@ public class BuffPlay extends Activity implements BluetoothAdapter.LeScanCallbac
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

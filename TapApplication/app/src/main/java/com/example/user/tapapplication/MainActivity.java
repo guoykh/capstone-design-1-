@@ -7,7 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 
 import com.example.user.tapapplication.Bluetooth_contact.Ble_MainActivity;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
         });
         myDialog.show();
     }
-
+    Button danbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,14 @@ public class MainActivity extends AppCompatActivity{
             Intent btintent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(btintent,REQUEST_ENABLE_BT);
         }
-
+        danbtn = findViewById(R.id.danbtn);
+        danbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, DanceList.class);
+                startActivity(i);
+            }
+        });
     }
 
     public void onClickBase(View view) {

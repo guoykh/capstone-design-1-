@@ -54,7 +54,7 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
     ListView list;
     private static final String TAG_NAME = "name";
     private static final String TAG_PHONE ="phone";
-
+    private boolean stay = false;
     SQLiteDatabase sampleDB = null;
     ListAdapter adapter;
     private boolean IsScanning;
@@ -269,6 +269,11 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
                 blechecked=true;
                 init();
                 Toast.makeText(Tap2Play.this,"연결 성공",Toast.LENGTH_SHORT).show();
+                iv.setImageResource(R.drawable.first);
+
+                handler.postDelayed(moving,8000);
+
+
             }
             else if(Device1 != null && Device2 == null) {
                 Log.d("run","TapTap2 연결 안됨");
@@ -285,6 +290,14 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
         }
     };
 
+    private final Runnable moving = new Runnable() {
+        @Override
+        public void run() {
+            if(stay==false){
+                Toast.makeText(Tap2Play.this,"연습을 시작해주세요",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onLeScan(final BluetoothDevice device, final int rssi,
@@ -376,18 +389,49 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
             Log.d("onChaRead","CallBack Success");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 final int i = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
-                if (i==3) iv.setImageResource(R.drawable.rignt3);
+                stay=true;
+                if (i==3) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv.setImageResource(R.drawable.rignt3);
+                            iv.invalidate();
+                        }
+                    });
+                }
                 if(i==4 | i==1 | i==2 ){
-                    characteristic.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-                    boolean X = gatt.writeCharacteristic(characteristic);
-                    if (i==4)
-                        iv.setImageResource(R.drawable.right4);
-                    if (i==1)
-                        iv.setImageResource(R.drawable.left1);
-                    if (i==2)
-                        iv.setImageResource(R.drawable.left2);
-                    count++;
-
+                    characteristic2.setValue(13, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                    boolean X = ConnGatt2.writeCharacteristic(characteristic2);
+                    if (i==4) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.right4);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==1) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left1);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
+                    if (i==2) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                iv.setImageResource(R.drawable.left2);
+                                iv.invalidate();
+                            }
+                        });
+                        count++;
+                    }
                     if (X) {
                         Log.d("Send","data 보내기 성공");
                     }
@@ -464,6 +508,10 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
         if(blechecked){
             blechecked=false;
         }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
+        }
     }
 
     @Override
@@ -489,6 +537,10 @@ public class Tap2Play extends Activity implements BluetoothAdapter.LeScanCallbac
         }
         if(blechecked){
             blechecked=false;
+        }
+        if(IsScanning == true) {
+            Adapter = BluetoothAdapter.getDefaultAdapter();
+            stopScan();
         }
     }
 

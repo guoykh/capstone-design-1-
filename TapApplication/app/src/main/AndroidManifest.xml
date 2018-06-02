@@ -55,7 +55,7 @@
         <activity android:name=".dongjak_play.ShufflePlay" />
         <activity android:name=".dongjak_play.DragPlay" />
         <activity android:name=".dongjak1_practice.Tap1Practice"/>
-
+        <activity android:name=".DanceList"/>
     </application>
 
 </manifest>
